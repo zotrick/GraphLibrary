@@ -16,7 +16,7 @@ public class Node {
 
     /**
      * 
-     * @param n_key name or key of the node
+     * @param n_key number or key of the node
      * @param color color of the node
      */
     public Node(String n_key, String color) {
@@ -26,7 +26,7 @@ public class Node {
     
     /**
      * 
-     * @param n_key name or key of the node
+     * @param n_key number or key of the node
      */
     public Node(String n_key) {
         this.n_key = n_key;

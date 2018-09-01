@@ -12,10 +12,11 @@ import java.util.HashMap;
  * @author Juan Eduardo
  */
 public class Graph {
-    public boolean directed;
+    private boolean isDirected;
+    private boolean allowSelfEdge;
     private int n,m;
-    HashMap<String,Node> nodes;
-    HashMap<String,Edge> edges;
+    private HashMap<Integer,Node> nodes;
+    private HashMap<Integer,Edge> edges;
             
     /**
      * 
@@ -24,10 +25,45 @@ public class Graph {
      * @param d is a directed Graph
      */
     public Graph(int n, int m, boolean d){
-        
-        this.directed = d;
+        this.isDirected = d;
         this.n = n;
         this.m = m;
     }
+    
+    /**
+     * 
+     * @param n number of nodes
+     * @param d is a directed Graph
+     */
+    public Graph(int n, boolean d){
+        this.n = n;
+        this.isDirected = d;
+    }
+
+    public int getN() {
+        return n;
+    }
+
+    public int getM() {
+        return m;
+    }
+
+    public HashMap<Integer, Node> getNodes() {
+        return nodes;
+    }
+
+    public HashMap<Integer, Edge> getEdges() {
+        return edges;
+    }
+
+    public void setNodes(HashMap<Integer, Node> nodes) {
+        this.nodes = nodes;
+    }
+
+    public void setEdges(HashMap<Integer, Edge> edges) {
+        this.edges = edges;
+    }
+    
+    
     
 }

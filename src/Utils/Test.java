@@ -5,6 +5,7 @@
  */
 package Utils;
 
+import Algorithms.GraphFactory;
 import Elements.Graph;
 
 /**
@@ -14,7 +15,11 @@ import Elements.Graph;
 public class Test {
     
     public static void main(String args[]){
-        Graph g = new Graph(0, 0, false);
+        Graph g = new Graph(5, 10, false);
+        GraphFactory.ErdosRenyi(g,false);
+        DataBuilder.printEdges(g);
+        
+        
             
     
     }
