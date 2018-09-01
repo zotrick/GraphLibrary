@@ -7,7 +7,7 @@ package Elements;
 
 /**
  *
- * @author Juan Eduardo
+ * @author Eduardo Lujan - Zotrick
  */
 public class Edge {
     public int e_key;

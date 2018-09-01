@@ -12,7 +12,7 @@ import java.util.Map;
 
 /**
  *
- * @author Juan Eduardo
+ * @author Eduardo Lujan - Zotrick
  */
 public class DataBuilder {
     

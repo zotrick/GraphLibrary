@@ -9,14 +9,11 @@ import Elements.Edge;
 import Elements.Graph;
 import Elements.Node;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Map;
 import java.util.Random;
 
 /**
  *
- * @author Juan Eduardo
+ * @author Eduardo Lujan - Zotrick
  */
 public class GraphFactory {
 

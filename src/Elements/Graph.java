@@ -9,10 +9,10 @@ import java.util.HashMap;
 
 /**
  *
- * @author Juan Eduardo
+ * @author Eduardo Lujan - Zotrick
  */
 public class Graph {
-    private boolean isDirected;
+    final private boolean isDirected;
     private boolean allowSelfEdge;
     private int n,m;
     private HashMap<Integer,Node> nodes;

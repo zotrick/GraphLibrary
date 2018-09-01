@@ -7,7 +7,7 @@ package Elements;
 
 /**
  *
- * @author Juan Eduardo
+ * @author Eduardo Lujan - Zotrick
  */
 public class Node {
     public String n_key;

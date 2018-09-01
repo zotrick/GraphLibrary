@@ -10,7 +10,7 @@ import Elements.Graph;
 
 /**
  *
- * @author Juan Eduardo
+ * @author Eduardo Lujan - Zotrick
  */
 public class Test {
     
