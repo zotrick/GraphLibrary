@@ -16,7 +16,7 @@ public class Graph {
     private boolean allowSelfEdge;
     private int n,m;
     private HashMap<Integer,Node> nodes;
-    private HashMap<Integer,Edge> edges;
+    private HashMap<String,Edge> edges;
             
     /**
      * 
@@ -52,7 +52,7 @@ public class Graph {
         return nodes;
     }
 
-    public HashMap<Integer, Edge> getEdges() {
+    public HashMap<String, Edge> getEdges() {
         return edges;
     }
 
@@ -60,7 +60,7 @@ public class Graph {
         this.nodes = nodes;
     }
 
-    public void setEdges(HashMap<Integer, Edge> edges) {
+    public void setEdges(HashMap<String, Edge> edges) {
         this.edges = edges;
     }
     
