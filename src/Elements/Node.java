@@ -12,7 +12,7 @@ package Elements;
 public class Node {
     public String n_key;
     public String color;
-    private int degree;
+    public int degree;
 
     /**
      * 
@@ -31,9 +31,5 @@ public class Node {
     public Node(String n_key) {
         this.n_key = n_key;
     }
-    
-    
-    
-    
         
 }

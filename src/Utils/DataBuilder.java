@@ -17,10 +17,10 @@ import java.util.Map;
 public class DataBuilder {
     
     public static void printEdges(Graph g){
-        Iterator<Map.Entry<Integer, Edge>> it = g.getEdges().entrySet().iterator();
+        Iterator<Map.Entry<String, Edge>> it = g.getEdges().entrySet().iterator();
             while (it.hasNext()) {
-                Edge e = it.next().getValue();
-                System.out.println(e.getN1() + "  " + e.getN2());
+                //
+                System.out.println(it.next().getKey());
             }
     }
     
