@@ -62,6 +62,7 @@ public class Graph {
 
     public void setEdges(HashMap<String, Edge> edges) {
         this.edges = edges;
+        this.m = edges.size();
     }
     
     

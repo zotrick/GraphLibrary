@@ -30,5 +30,8 @@ public class Edge {
     public Edge(String e_name) {
         this.e_name = e_name;
     }
+    
+    public Edge() {
+    }
         
 }

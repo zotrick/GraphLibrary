@@ -13,6 +13,7 @@ public class Node {
     public String n_key;
     public String color;
     public int degree;
+    public double x,y;
 
     /**
      * 
@@ -31,5 +32,19 @@ public class Node {
     public Node(String n_key) {
         this.n_key = n_key;
     }
+
+    /**
+     * 
+     * @param n_key number or key of the node
+     * @param x coordinate
+     * @param y coordinate
+     */
+    public Node(String n_key, double x, double y) {
+        this.n_key = n_key;
+        this.x = x;
+        this.y = y;
+    }
+    
+    
         
 }
