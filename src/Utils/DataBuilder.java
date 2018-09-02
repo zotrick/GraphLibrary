@@ -19,14 +19,15 @@ public class DataBuilder {
     
     public static void printEdges(Graph g){
         Iterator<Map.Entry<String, Edge>> it = g.getEdges().entrySet().iterator();
-        Iterator<Map.Entry<Integer, Node>> it2 = g.getNodes().entrySet().iterator();
+
             while (it.hasNext()) {
                 //
                 System.out.println(it.next().getKey());
             }
-//            while (it2.hasNext()) {
-//                System.out.println(it2.next().getValue().n_key);
-//            }
+        Iterator<Map.Entry<Integer, Node>> it2 = g.getNodes().entrySet().iterator();
+            while (it2.hasNext()) {
+                System.out.println(it2.next().getValue().n_key);
+            }
     }
     
 }

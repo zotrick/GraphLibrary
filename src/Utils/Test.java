@@ -15,11 +15,11 @@ import Elements.Graph;
 public class Test {
     
     public static void main(String args[]){
-        Graph g = new Graph(20,false);
+        Graph g = new Graph(2,false);
 //        GraphFactory.ErdosRenyi(g,2,false);
 //        GraphFactory.Gilbert(g,2, 10, false);
 //        GraphFactory.SimpleGeographic(g, 100);
-        
+        GraphFactory.BarabasiAlbert(g,0);
         DataBuilder.printEdges(g);
     }
 }

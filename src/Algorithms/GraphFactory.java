@@ -9,8 +9,6 @@ import Elements.Edge;
 import Elements.Graph;
 import Elements.Node;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 import java.util.Random;
 
 /**
@@ -169,6 +167,26 @@ public class GraphFactory {
         HashMap<String, Edge> edges = new HashMap<>();
         Random rnd = new Random();
         int n = g.getN();
-        int m = g.getM();
+        float prob = 0;
+        if (d > 0) {
+            for (int i = 0; i < n; i++) {
+                nodes.put(i, new Node("N" + i));
+                for (int j = 0; j < nodes.size(); j++) {
+                    if (nodes.get(j) != nodes.get(i)) {
+                        prob = 1 - (nodes.get(j).degree / d);
+                        if (rnd.nextDouble() <= prob) {
+                            Edge e = new Edge("E" + i);
+                            edges.put(nodes.get(j).n_key + "--" + nodes.get(i).n_key, e);
+                            nodes.get(j).degree++;
+                            nodes.get(i).degree++;
+
+                        }
+                    }
+                }
+            }
+        }
+        g.setNodes(nodes);
+        g.setEdges(edges);
+
     }
 }
