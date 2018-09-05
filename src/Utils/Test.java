@@ -7,6 +7,9 @@ package Utils;
 
 import Algorithms.GraphFactory;
 import Elements.Graph;
+import java.io.FileNotFoundException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -15,11 +18,14 @@ import Elements.Graph;
 public class Test {
     
     public static void main(String args[]){
-        Graph g = new Graph(2,false);
-//        GraphFactory.ErdosRenyi(g,2,false);
+        Graph g = new Graph(50,false);
+        GraphFactory.ErdosRenyi(g,30,false);
 //        GraphFactory.Gilbert(g,2, 10, false);
 //        GraphFactory.SimpleGeographic(g, 100);
-        GraphFactory.BarabasiAlbert(g,0);
-        DataBuilder.printEdges(g);
+//        GraphFactory.BarabasiAlbert(g,0);
+//        DataBuilder.printEdges(g);
+
+
+            DataBuilder.generateFile(g);
     }
 }
