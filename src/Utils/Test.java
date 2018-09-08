@@ -18,11 +18,11 @@ import java.util.logging.Logger;
 public class Test {
     
     public static void main(String args[]){
-        Graph g = new Graph(50,false);
-        GraphFactory.ErdosRenyi(g,30,false);
+        Graph g = new Graph(1000,false);
+        GraphFactory.ErdosRenyi(g,500,false);
 //        GraphFactory.Gilbert(g,2, 10, false);
 //        GraphFactory.SimpleGeographic(g, 100);
-//        GraphFactory.BarabasiAlbert(g,0);
+//        GraphFactory.BarabasiAlbert(g,3);
 //        DataBuilder.printEdges(g);
 
 

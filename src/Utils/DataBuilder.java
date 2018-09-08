@@ -23,19 +23,19 @@ import java.util.logging.Logger;
 public class DataBuilder {
 
     public static void generateFile(Graph g) {
-        File f = new File("C:\\Users\\Juan Eduardo\\Desktop\\graph.data");
-        String struct = "Graph 1 \n"
-                + "[\nNODES{\n";
+        
+        File f = new File("C:\\Users\\Juan Eduardo\\Desktop\\graph3.gv");
+        String struct = "graph G1 {\n";
         Iterator<Map.Entry<Integer, Node>> it2 = g.getNodes().entrySet().iterator();
         while (it2.hasNext()) {
-            struct += it2.next().getValue().n_key + "\n";
+            struct += it2.next().getValue().n_key + ";\n";
         }
-        struct += "}\n";
+        struct += "\n";
         Iterator<Map.Entry<String, Edge>> it = g.getEdges().entrySet().iterator();
         while (it.hasNext()) {
-            struct += it.next().getKey() + "\n";
+            struct += it.next().getKey() + ";\n";
         }
-        struct += "]";
+        struct += "}";
 
         PrintWriter pw;
         try {
