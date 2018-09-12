@@ -24,7 +24,7 @@ public class DataBuilder {
 
     public static void generateFile(Graph g) {
         
-        File f = new File("C:\\Users\\Juan Eduardo\\Desktop\\graph3.gv");
+        File f = new File("C:\\Users\\Juan Eduardo\\Desktop\\graph4.gv");
         String struct = "graph G1 {\n";
         Iterator<Map.Entry<Integer, Node>> it2 = g.getNodes().entrySet().iterator();
         while (it2.hasNext()) {

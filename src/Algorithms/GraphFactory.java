@@ -52,6 +52,7 @@ public class GraphFactory {
                 nodes.get(n1).degree++;
                 nodes.get(n2).degree++;
                 Edge e = new Edge("E" + i);
+
                 edges.put(nodes.get(n1).n_key + "--" + nodes.get(n2).n_key, e);
             }
         }
@@ -63,11 +64,10 @@ public class GraphFactory {
     /**
      *
      * @param g Graph to create
-     * @param m Number of edges
      * @param p Probability between 1 to 100
      * @param allowSelfEdge Allow to self connect
      */
-    public static void Gilbert(Graph g, int m, double p, boolean allowSelfEdge) {
+    public static void Gilbert(Graph g, double p, boolean allowSelfEdge) {
         HashMap<Integer, Node> nodes = new HashMap<>();
         HashMap<String, Edge> edges = new HashMap<>();
         Random rnd = new Random();
@@ -88,29 +88,24 @@ public class GraphFactory {
             }
         } else {
             for (int i = 0; i < n; i++) {
-                int n1 = i;
-                int n2 = 0;
-                if ((i + 1 < n) && m > 0) {
-                    n2 = i + 1;
-                } else {
-                    break;
-                }
-                for (int j = 0; j < m; j++) {
-
-//                    if (!allowSelfEdge) {
-//                        while (n1 == n2) {
-//                            n2 = rnd.nextInt(n);
-//                        }
-//                    }
-                    Edge e = new Edge("E" + j);
-                    if (Math.random() <= p && (nodes.get(n1).degree == 0) && (nodes.get(n2).degree == 0)) {
-                        nodes.get(n1).degree++;
-                        nodes.get(n2).degree++;
-                        edges.put(nodes.get(n1).n_key + "--" + nodes.get(n2).n_key, e);
-                        m--;
+                for (int j = 0; j < n; j++) {
+                    if (!allowSelfEdge) {
+                        if (i != j) {
+                            Edge e = new Edge("E" + j);
+                            if (Math.random() <= p) {
+                                edges.put(nodes.get(i).n_key + "--" + nodes.get(j).n_key, e);
+                            }
+                        }
+                    } else {
+                        Edge e = new Edge("E" + j);
+                        if (Math.random() <= p) {
+                            edges.put(nodes.get(i).n_key + "--" + nodes.get(j).n_key, e);
+                        }
                     }
                 }
+
             }
+
         }
         g.setNodes(nodes);
         g.setEdges(edges);
@@ -120,8 +115,9 @@ public class GraphFactory {
      *
      * @param g Graph to create
      * @param r Distance between 1 and 100 (it allows decimal point)
+     * @param allowSelfEdge Allow to assign auto edge
      */
-    public static void SimpleGeographic(Graph g, double r) {
+    public static void SimpleGeographic(Graph g, double r, boolean allowSelfEdge) {
         HashMap<Integer, Node> nodes = new HashMap<>();
         HashMap<String, Edge> edges = new HashMap<>();
         Random rnd = new Random();
@@ -133,21 +129,44 @@ public class GraphFactory {
         }
 
         if (n < 2) {
-            System.out.println("Self edges are not allowed");
+            if (!allowSelfEdge) {
+                System.out.println("Self edges are not allowed");
+            } else {
+                Edge e = new Edge("E" + 0);
+                edges.put(nodes.get(0).n_key + "--" + nodes.get(0).n_key, e);
+            }
+
         } else {
             for (int i = 0; i < n; i++) {
-                for (int j = i + 1; j < n; j++) {
-                    Node n1 = nodes.get(i);
-                    Node n2 = nodes.get(j);
-                    double auxdistance = 0;
-                    auxdistance = Math.sqrt(Math.pow(n2.x - n1.x, 2) + Math.pow(n2.y - n1.y, 2));
-                    if (auxdistance <= r) {
-                        n1.degree++;
-                        n1.degree++;
-                        Edge e = new Edge("E" + i);
-                        edges.put(n1.n_key + "--" + n2.n_key, e);
-                        i++;
+                for (int j = 0; j < n; j++) {
+                    if (!allowSelfEdge) {
+                        if (i != j) {
+                            Node n1 = nodes.get(i);
+                            Node n2 = nodes.get(j);
+                            double auxdistance = 0;
+                            auxdistance = Math.sqrt(Math.pow(n2.x - n1.x, 2) + Math.pow(n2.y - n1.y, 2));
+                            if (auxdistance <= r) {
+                                n1.degree++;
+                                n1.degree++;
+                                Edge e = new Edge("E" + i);
+                                edges.put(n1.n_key + "--" + n2.n_key, e);
+                            }
+                        }
+                    }else{
+                            Node n1 = nodes.get(i);
+                            Node n2 = nodes.get(j);
+                            double auxdistance = 0;
+                            auxdistance = Math.sqrt(Math.pow(n2.x - n1.x, 2) + Math.pow(n2.y - n1.y, 2));
+                            if (auxdistance <= r) {
+                                n1.degree++;
+                                n1.degree++;
+                                Edge e = new Edge("E" + i);
+                                edges.put(n1.n_key + "--" + n2.n_key, e);
+                            }
+                            
+                        
                     }
+
                 }
 
             }
