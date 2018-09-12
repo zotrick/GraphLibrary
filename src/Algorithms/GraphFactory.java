@@ -28,7 +28,6 @@ public class GraphFactory {
         HashMap<String, Edge> edges = new HashMap<>();
         Random rnd = new Random();
         int n = g.getN();
-
         for (int i = 0; i < n; i++) {
             nodes.put(i, new Node("N" + i));
         }
@@ -52,13 +51,11 @@ public class GraphFactory {
                 nodes.get(n1).degree++;
                 nodes.get(n2).degree++;
                 Edge e = new Edge("E" + i);
-
                 edges.put(nodes.get(n1).n_key + "--" + nodes.get(n2).n_key, e);
             }
         }
         g.setNodes(nodes);
         g.setEdges(edges);
-
     }
 
     /**
@@ -73,12 +70,10 @@ public class GraphFactory {
         Random rnd = new Random();
         p /= 100;
         int n = g.getN();
-
         for (int i = 0; i < n; i++) {
             nodes.put(i, new Node("N" + i));
         }
         if (n < 2) {
-
             if (allowSelfEdge && (Math.random() <= p)) {
                 Edge e = new Edge("E" + 0);
                 nodes.get(0).degree++;
@@ -103,9 +98,7 @@ public class GraphFactory {
                         }
                     }
                 }
-
             }
-
         }
         g.setNodes(nodes);
         g.setEdges(edges);
@@ -123,11 +116,9 @@ public class GraphFactory {
         Random rnd = new Random();
         r /= 100;
         int n = g.getN();
-
         for (int i = 0; i < n; i++) {
             nodes.put(i, new Node(("N" + i), rnd.nextDouble(), rnd.nextDouble()));
         }
-
         if (n < 2) {
             if (!allowSelfEdge) {
                 System.out.println("Self edges are not allowed");
@@ -135,7 +126,6 @@ public class GraphFactory {
                 Edge e = new Edge("E" + 0);
                 edges.put(nodes.get(0).n_key + "--" + nodes.get(0).n_key, e);
             }
-
         } else {
             for (int i = 0; i < n; i++) {
                 for (int j = 0; j < n; j++) {
@@ -163,17 +153,12 @@ public class GraphFactory {
                                 Edge e = new Edge("E" + i);
                                 edges.put(n1.n_key + "--" + n2.n_key, e);
                             }
-                            
-                        
                     }
-
                 }
-
             }
         }
         g.setNodes(nodes);
         g.setEdges(edges);
-
     }
 
     /**
@@ -198,7 +183,6 @@ public class GraphFactory {
                             edges.put(nodes.get(j).n_key + "--" + nodes.get(i).n_key, e);
                             nodes.get(j).degree++;
                             nodes.get(i).degree++;
-
                         }
                     }
                 }
@@ -206,6 +190,5 @@ public class GraphFactory {
         }
         g.setNodes(nodes);
         g.setEdges(edges);
-
     }
 }
