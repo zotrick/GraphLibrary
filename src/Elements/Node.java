@@ -10,13 +10,14 @@ package Elements;
  * @author Eduardo Lujan - Zotrick
  */
 public class Node {
+
     public String n_key;
     public String color;
     public int degree;
-    public double x,y;
+    public double x, y;
 
     /**
-     * 
+     *
      * @param n_key number or key of the node
      * @param color color of the node
      */
@@ -25,9 +26,9 @@ public class Node {
         this.n_key = n_key;
         this.color = color;
     }
-    
+
     /**
-     * 
+     *
      * @param n_key number or key of the node
      */
     public Node(String n_key) {
@@ -36,7 +37,7 @@ public class Node {
     }
 
     /**
-     * 
+     *
      * @param n_key number or key of the node
      * @param x coordinate
      * @param y coordinate
@@ -47,7 +48,21 @@ public class Node {
         this.y = y;
         this.degree = 0;
     }
-    
-    
-        
+
+    public String getN_key() {
+        return n_key;
+    }
+
+    public void setN_key(String n_key) {
+        this.n_key = n_key;
+    }
+
+    public int getDegree() {
+        return degree;
+    }
+
+    public void increaseDegree() {
+        this.degree++;
+    }
+
 }

@@ -29,6 +29,21 @@ public class Graph {
         this.n = n;
         this.m = m;
     }
+
+    /**
+     * 
+     * @param isDirected 
+     * @param n Number of nodes
+     * @param nodes List of nodes
+     * @param edges  List of edges
+     */
+    public Graph(boolean isDirected, int n, HashMap<Integer, Node> nodes, HashMap<String, Edge> edges) {
+        this.isDirected = isDirected;
+        this.n = n;
+        this.m = edges.size();
+        this.nodes = nodes;
+        this.edges = edges;
+    }
     
     /**
      * 

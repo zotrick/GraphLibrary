@@ -16,52 +16,32 @@ public class Test {
     
     public static void main(String args[]){
         //30
-       Graph g1 = new Graph(30,false);
-        
-        GraphFactory.ErdosRenyi(g1,20,false);
+        Graph g1 = GraphFactory.ErdosRenyi(30,270,false);
         DataBuilder.generateFile(g1,"Erdos_30");
-        g1 = new Graph(30,false);
-        GraphFactory.Gilbert(g1,25, false);
-        DataBuilder.generateFile(g1,"Gilbert_30");
-        g1 = new Graph(30,false);
-        GraphFactory.SimpleGeographic(g1, 50,false);
-        DataBuilder.generateFile(g1,"SimpleGeo_30");
-        g1 = new Graph(30,false);       
-        GraphFactory.BarabasiAlbert(g1,15);
-        DataBuilder.generateFile(g1,"Barabasi_30");
-//        
+        Graph g2 = GraphFactory.Gilbert(30,30, false);
+        DataBuilder.generateFile(g2,"Gilbert_30");
+        Graph g3 = GraphFactory.SimpleGeographic(30, 50,false);
+        DataBuilder.generateFile(g3,"SimpleGeo_30");
+        Graph g4 =GraphFactory.BarabasiAlbert(30,5,false);
+        DataBuilder.generateFile(g4,"Barabasi_30");
         //100
-        Graph g2 = new Graph(100,false);
-        
-        GraphFactory.ErdosRenyi(g2,50,false);
-        DataBuilder.generateFile(g2,"Erdos_100");
-        g2 = new Graph(100,false);
-        GraphFactory.Gilbert(g2,10, false);
-        DataBuilder.generateFile(g2,"Gilbert_100");
-        g2 = new Graph(100,false);
-        GraphFactory.SimpleGeographic(g2, 25,false);
-        DataBuilder.generateFile(g2,"SimpleGeo_100");
-        g2 = new Graph(100,false);       
-        GraphFactory.BarabasiAlbert(g2,15);
-        DataBuilder.generateFile(g2,"Barabasi_100");
-        
+        Graph g5 = GraphFactory.ErdosRenyi(100,270,false);
+        DataBuilder.generateFile(g5,"Erdos_100");
+        Graph g6 = GraphFactory.Gilbert(100,30, false);
+        DataBuilder.generateFile(g6,"Gilbert_100");
+        Graph g7 = GraphFactory.SimpleGeographic(30, 50,false);
+        DataBuilder.generateFile(g7,"SimpleGeo_100");
+        Graph g8 =GraphFactory.BarabasiAlbert(100,5,false);
+        DataBuilder.generateFile(g8,"Barabasi_100");
         //500
-        Graph g3 = new Graph(500,false);
-
-        GraphFactory.ErdosRenyi(g3,50,false);
-        DataBuilder.generateFile(g3,"Erdos_500");
-        g3 = new Graph(500,false);
-        GraphFactory.Gilbert(g3,.1, false);
-        DataBuilder.generateFile(g3,"Gilbert_500");
-        g3 = new Graph(500,false);
-        GraphFactory.SimpleGeographic(g3, 5,false);
-        DataBuilder.generateFile(g3,"SimpleGeo_500");
-        g3 = new Graph(500,false);       
-        GraphFactory.BarabasiAlbert(g3,15);
-        DataBuilder.generateFile(g3,"Barabasi_500");
-        
-        //DataBuilder.printEdges(g);
-       
+        Graph g9 = GraphFactory.ErdosRenyi(500,270,false);
+        DataBuilder.generateFile(g9,"Erdos_500");
+        Graph g10 = GraphFactory.Gilbert(500,30, false);
+        DataBuilder.generateFile(g10,"Gilbert_500");
+        Graph g11 = GraphFactory.SimpleGeographic(30, 50,false);
+        DataBuilder.generateFile(g11,"SimpleGeo_500");
+        Graph g12 =GraphFactory.BarabasiAlbert(500,5,false);
+        DataBuilder.generateFile(g12,"Barabasi_500");
             
         }
             
