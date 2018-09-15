@@ -172,9 +172,7 @@ public class GraphFactory {
     public static Graph BarabasiAlbert(int n, double d, boolean allowSelfEdge) {
         HashMap<Integer, Node> nodes = new HashMap<>();
         HashMap<String, Edge> edges = new HashMap<>();
-
         double prob = 0;
-
         for (int i = 0; i < n; i++) {
             nodes.put(i, new Node(("N" + i)));
         }
