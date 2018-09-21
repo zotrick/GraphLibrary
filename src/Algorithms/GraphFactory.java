@@ -223,8 +223,9 @@ public class GraphFactory {
     public static Graph BFS(Graph g, int s) {
         LinkedList<LinkedList<Node>> daddyLayer = new LinkedList<>();
         boolean[] discovered = new boolean[g.getNodes().size()];
+        HashMap<String, Edge> edges = new HashMap<>();
         discovered[s] = true;
-        Graph t = new Graph(false);
+        
         daddyLayer.add(new LinkedList<>());
         daddyLayer.get(0).add(g.getNodes().get(s));
         int i = 0;
@@ -236,16 +237,19 @@ public class GraphFactory {
                 it2 = g.getEdges().entrySet().iterator();
                 while (it2.hasNext()) {
                     int n = daddyLayer.get(i).get(j).getIkey();
-                    Edge e = it2.next().getValue();
+                    Map.Entry<String, Edge> edge = it2.next();
+                    Edge e =edge.getValue();
                     if (n == e.getN1()) {
                         if (!discovered[e.getN2()]) {
                             discovered[e.getN2()] = true;
                             babyLayer.add(g.getNodes().get(e.getN2()));
+                            edges.put(edge.getKey(), e);
                         }
                     } else if (n == e.getN2()) {
                         if (!discovered[e.getN1()]) {
                             discovered[e.getN1()] = true;
                             babyLayer.add(g.getNodes().get(e.getN1()));
+                            edges.put(edge.getKey(), e);
                         }
                     }
  
@@ -256,6 +260,7 @@ public class GraphFactory {
             i++;
         }
         System.out.println();
+        Graph t = new Graph(false,g.getN(),g.getNodes(),edges);
 
         return t;
     }

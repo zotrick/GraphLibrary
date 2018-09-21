@@ -46,9 +46,10 @@ public class Test {
     }
     public static void main(String args[]){
 //            generateGraphsTest();
-            Graph g1 = GraphFactory.ErdosRenyi(15,30,false);
-            DataBuilder.generateFile(g1, "Test_BFS");
+            Graph g1 = GraphFactory.ErdosRenyi(500,1500,false);
+            DataBuilder.generateFile(g1, "Test_Graph");
             Graph t = GraphFactory.BFS(g1, 0);
+            DataBuilder.generateFile(t, "Test_BFS");
             System.out.println();
             
         }
