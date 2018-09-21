@@ -8,7 +8,11 @@ package Algorithms;
 import Elements.Edge;
 import Elements.Graph;
 import Elements.Node;
+import com.sun.org.apache.xalan.internal.xsltc.dom.BitArray;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -33,7 +37,8 @@ public class GraphFactory {
         }
         if (n < 2) {
             if (allowSelfEdge) {
-                Edge e = new Edge("E" + 0);
+//                Edge e = new Edge("E" + 0);
+                Edge e = new Edge("E" + 0, 0, 0);
                 nodes.get(0).increaseDegree();
                 edges.put(nodes.get(0).getN_key() + "--" + nodes.get(0).getN_key(), e);
             } else {
@@ -50,7 +55,8 @@ public class GraphFactory {
                 }
                 nodes.get(n1).increaseDegree();
                 nodes.get(n2).increaseDegree();
-                Edge e = new Edge("E" + i);
+//                Edge e = new Edge("E" + i);
+                Edge e = new Edge("E" + i, n1, n2);
                 edges.put(nodes.get(n1).getN_key() + "--" + nodes.get(n2).getN_key(), e);
             }
         }
@@ -75,7 +81,8 @@ public class GraphFactory {
         }
         if (n < 2) {
             if (allowSelfEdge && (Math.random() <= p)) {
-                Edge e = new Edge("E" + 0);
+//                Edge e = new Edge("E" + 0);
+                Edge e = new Edge("E" + 0, 0, 0);
                 nodes.get(0).increaseDegree();
                 edges.put(nodes.get(0).getN_key() + "--" + nodes.get(0).getN_key(), e);
             } else {
@@ -86,13 +93,15 @@ public class GraphFactory {
                 for (int j = 0; j < n; j++) {
                     if (!allowSelfEdge) {
                         if (i != j) {
-                            Edge e = new Edge("E" + j);
+//                            Edge e = new Edge("E" + j);
+                            Edge e = new Edge("E" + j, i, j);
                             if (Math.random() <= p) {
                                 edges.put(nodes.get(i).getN_key() + "--" + nodes.get(j).getN_key(), e);
                             }
                         }
                     } else {
-                        Edge e = new Edge("E" + j);
+//                        Edge e = new Edge("E" + j);
+                        Edge e = new Edge("E" + j, i, j);
                         if (Math.random() <= p) {
                             edges.put(nodes.get(i).getN_key() + "--" + nodes.get(j).getN_key(), e);
                         }
@@ -124,7 +133,8 @@ public class GraphFactory {
             if (!allowSelfEdge) {
                 System.out.println("Self edges are not allowed");
             } else {
-                Edge e = new Edge("E" + 0);
+//                Edge e = new Edge("E" + 0);
+                Edge e = new Edge("E" + 0, 0, 0);
                 edges.put(nodes.get(0).getN_key() + "--" + nodes.get(0).getN_key(), e);
             }
         } else {
@@ -139,7 +149,8 @@ public class GraphFactory {
                             if (auxdistance <= r) {
                                 n1.increaseDegree();
                                 n1.increaseDegree();
-                                Edge e = new Edge("E" + i);
+//                                Edge e = new Edge("E" + i);
+                                Edge e = new Edge("E" + i, i, j);
                                 edges.put(n1.getN_key() + "--" + n2.getN_key(), e);
                             }
                         }
@@ -151,7 +162,8 @@ public class GraphFactory {
                         if (auxdistance <= r) {
                             n1.increaseDegree();
                             n1.increaseDegree();
-                            Edge e = new Edge("E" + i);
+//                            Edge e = new Edge("E" + i);
+                            Edge e = new Edge("E" + i, i, j);
                             edges.put(n1.getN_key() + "--" + n2.getN_key(), e);
                         }
                     }
@@ -184,7 +196,8 @@ public class GraphFactory {
                     if (j != i || allowSelfEdge) {
                         prob = 1 - (nodes.get(j).getDegree() / d);
                         if (Math.random() <= prob) {
-                            Edge e = new Edge("E" + nE);
+//                            Edge e = new Edge("E" + nE);
+                            Edge e = new Edge("E" + nE, i, j);
                             edges.put(nodes.get(i).getN_key() + "--" + nodes.get(j).getN_key(), e);
                             nodes.get(i).increaseDegree();
                             if (j != i) {
@@ -199,5 +212,51 @@ public class GraphFactory {
         }
         Graph g = new Graph(false, n, nodes, edges);
         return g;
+    }
+
+    /**
+     *
+     * @param g Graph to check
+     * @param s Initial node (integer)
+     * @return t Tree
+     */
+    public static Graph BFS(Graph g, int s) {
+        LinkedList<LinkedList<Node>> daddyLayer = new LinkedList<>();
+        boolean[] discovered = new boolean[g.getNodes().size()];
+        discovered[s] = true;
+        Graph t = new Graph(false);
+        daddyLayer.add(new LinkedList<>());
+        daddyLayer.get(0).add(g.getNodes().get(s));
+        int i = 0;
+        Iterator<Map.Entry<String, Edge>> it2;
+        while (!daddyLayer.get(i).isEmpty()) {
+            LinkedList<Node> babyLayer = new LinkedList<>();
+            
+            for (int j = 0; j < daddyLayer.get(i).size(); j++) {
+                it2 = g.getEdges().entrySet().iterator();
+                while (it2.hasNext()) {
+                    int n = daddyLayer.get(i).get(j).getIkey();
+                    Edge e = it2.next().getValue();
+                    if (n == e.getN1()) {
+                        if (!discovered[e.getN2()]) {
+                            discovered[e.getN2()] = true;
+                            babyLayer.add(g.getNodes().get(e.getN2()));
+                        }
+                    } else if (n == e.getN2()) {
+                        if (!discovered[e.getN1()]) {
+                            discovered[e.getN1()] = true;
+                            babyLayer.add(g.getNodes().get(e.getN1()));
+                        }
+                    }
+ 
+                }
+                System.out.println();
+            }
+            daddyLayer.add(babyLayer);
+            i++;
+        }
+        System.out.println();
+
+        return t;
     }
 }

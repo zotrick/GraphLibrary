@@ -15,6 +15,7 @@ public class Node {
     public String color;
     public int degree;
     public double x, y;
+    public int ikey;
 
     /**
      *
@@ -24,6 +25,7 @@ public class Node {
     public Node(String n_key, String color) {
         this.degree = 0;
         this.n_key = n_key;
+        this.ikey =Integer.parseInt(n_key.substring(1, n_key.length()));
         this.color = color;
     }
 
@@ -34,6 +36,7 @@ public class Node {
     public Node(String n_key) {
         this.degree = 0;
         this.n_key = n_key;
+        this.ikey =Integer.parseInt(n_key.substring(1, n_key.length()));
     }
 
     /**
@@ -44,6 +47,7 @@ public class Node {
      */
     public Node(String n_key, double x, double y) {
         this.n_key = n_key;
+        this.ikey =Integer.parseInt(n_key.substring(1, n_key.length()));
         this.x = x;
         this.y = y;
         this.degree = 0;
@@ -55,6 +59,7 @@ public class Node {
 
     public void setN_key(String n_key) {
         this.n_key = n_key;
+        this.ikey =Integer.parseInt(n_key.substring(1, n_key.length()));
     }
 
     public int getDegree() {
@@ -65,4 +70,8 @@ public class Node {
         this.degree++;
     }
 
+    public int getIkey() {
+        return ikey;
+    }
+    
 }

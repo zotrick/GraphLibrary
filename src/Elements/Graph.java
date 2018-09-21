@@ -17,7 +17,14 @@ public class Graph {
     private int n,m;
     private HashMap<Integer,Node> nodes;
     private HashMap<String,Edge> edges;
-            
+
+    /**
+     * 
+     * @param isDirected 
+     */
+    public Graph(boolean isDirected) {
+        this.isDirected = isDirected;
+    }
     /**
      * 
      * @param n number of nodes

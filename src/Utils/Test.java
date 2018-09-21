@@ -14,8 +14,9 @@ import Elements.Graph;
  */
 public class Test {
     
-    public static void main(String args[]){
-        //30
+    
+    private static void generateGraphsTest(){
+    //30
         Graph g1 = GraphFactory.ErdosRenyi(30,270,false);
         DataBuilder.generateFile(g1,"Erdos_30");
         Graph g2 = GraphFactory.Gilbert(30,30, false);
@@ -42,6 +43,13 @@ public class Test {
         DataBuilder.generateFile(g11,"SimpleGeo_500");
         Graph g12 =GraphFactory.BarabasiAlbert(500,5,false);
         DataBuilder.generateFile(g12,"Barabasi_500");
+    }
+    public static void main(String args[]){
+//            generateGraphsTest();
+            Graph g1 = GraphFactory.ErdosRenyi(15,30,false);
+            DataBuilder.generateFile(g1, "Test_BFS");
+            Graph t = GraphFactory.BFS(g1, 0);
+            System.out.println();
             
         }
             
