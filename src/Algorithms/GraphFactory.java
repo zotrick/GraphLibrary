@@ -9,6 +9,7 @@ import Elements.Edge;
 import Elements.Graph;
 import Elements.Node;
 import com.sun.org.apache.xalan.internal.xsltc.dom.BitArray;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -217,51 +218,84 @@ public class GraphFactory {
     /**
      *
      * @param g Graph to check
-     * @param s Initial node (integer)
-     * @return t Tree
+     * @param s Initial node (integer from 0 to n)
+     * @return t BFS Tree
      */
     public static Graph BFS(Graph g, int s) {
-        LinkedList<LinkedList<Node>> daddyLayer = new LinkedList<>();
+        HashMap<HashMap<Integer, Edge>, Node> hg = new HashMap<>();
+
+        LinkedList<LinkedList<Node>> parentLayer = new LinkedList<>();
         boolean[] discovered = new boolean[g.getNodes().size()];
         HashMap<String, Edge> edges = new HashMap<>();
         discovered[s] = true;
-        
-        daddyLayer.add(new LinkedList<>());
-        daddyLayer.get(0).add(g.getNodes().get(s));
+        parentLayer.add(new LinkedList<>());
+        parentLayer.get(0).add(g.getNodes().get(s));
         int i = 0;
         Iterator<Map.Entry<String, Edge>> it2;
-        while (!daddyLayer.get(i).isEmpty()) {
-            LinkedList<Node> babyLayer = new LinkedList<>();
-            
-            for (int j = 0; j < daddyLayer.get(i).size(); j++) {
+        while (!parentLayer.get(i).isEmpty()) {
+            LinkedList<Node> childLayer = new LinkedList<>();
+            for (int j = 0; j < parentLayer.get(i).size(); j++) {
                 it2 = g.getEdges().entrySet().iterator();
                 while (it2.hasNext()) {
-                    int n = daddyLayer.get(i).get(j).getIkey();
+                    int n = parentLayer.get(i).get(j).getIkey();
                     Map.Entry<String, Edge> edge = it2.next();
-                    Edge e =edge.getValue();
+                    Edge e = edge.getValue();
                     if (n == e.getN1()) {
                         if (!discovered[e.getN2()]) {
                             discovered[e.getN2()] = true;
-                            babyLayer.add(g.getNodes().get(e.getN2()));
+                            childLayer.add(g.getNodes().get(e.getN2()));
                             edges.put(edge.getKey(), e);
                         }
                     } else if (n == e.getN2()) {
                         if (!discovered[e.getN1()]) {
                             discovered[e.getN1()] = true;
-                            babyLayer.add(g.getNodes().get(e.getN1()));
+                            childLayer.add(g.getNodes().get(e.getN1()));
                             edges.put(edge.getKey(), e);
                         }
                     }
- 
+
                 }
-                System.out.println();
             }
-            daddyLayer.add(babyLayer);
+            parentLayer.add(childLayer);
             i++;
         }
-        System.out.println();
-        Graph t = new Graph(false,g.getN(),g.getNodes(),edges);
+        Graph t = new Graph(false, g.getN(), g.getNodes(), edges);
+        return t;
+    }
 
+    private static HashMap<String, Edge> edgesDFSR = new HashMap<>();
+
+    /**
+     *
+     * @param g Graph to check
+     * @param n Initial node (integer from 0 to n)
+     * @return t DFS Tree
+     */
+    public static Graph DFSRecursive(Graph g, int n, boolean[] discovered) {
+//        boolean[] discovered = new boolean[g.getNodes().size()];
+
+        discovered[n] = true;
+        Iterator<Map.Entry<String, Edge>> it2 = g.getEdges().entrySet().iterator();
+         
+        int i = n;
+        while (it2.hasNext()) {
+           Map.Entry<String, Edge> edge = it2.next();
+            Edge e = edge.getValue();
+            if (i == e.getN1()) {
+                if (!discovered[e.getN2()]) {
+                    edgesDFSR.put(edge.getKey(), e);
+                    DFSRecursive(g, e.getN2(), discovered);
+                }
+            } else if (i == e.getN2()) {
+                if (!discovered[e.getN1()]) {
+                    edgesDFSR.put(edge.getKey(), e);
+                    DFSRecursive(g, e.getN1(), discovered);
+                }
+            }
+        }
+        
+//        System.out.println();
+        Graph t = new Graph(false, g.getN(), g.getNodes(), edgesDFSR);
         return t;
     }
 }

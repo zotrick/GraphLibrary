@@ -44,14 +44,25 @@ public class Test {
         Graph g12 =GraphFactory.BarabasiAlbert(500,5,false);
         DataBuilder.generateFile(g12,"Barabasi_500");
     }
-    public static void main(String args[]){
-//            generateGraphsTest();
+    
+    private static void generateBFSTest(){
             Graph g1 = GraphFactory.ErdosRenyi(500,1500,false);
             DataBuilder.generateFile(g1, "Test_Graph");
-            Graph t = GraphFactory.BFS(g1, 0);
+            Graph t = GraphFactory.BFS(g1, 5);
             DataBuilder.generateFile(t, "Test_BFS");
+            Graph g2 = GraphFactory.BarabasiAlbert(500, 20, false);
+            DataBuilder.generateFile(g2, "Test_Graph_B");
+            Graph t2 = GraphFactory.BFS(g2, 6);
+            DataBuilder.generateFile(t2, "Test_BFS_Barabasi");
+    }
+    public static void main(String args[]){
+//          generateGraphsTest();
+//            generateBFSTest();
+            Graph g1 = GraphFactory.BarabasiAlbert(500, 20, false);
+            DataBuilder.generateFile(g1, "Test_Graph_DR");
+            Graph t = GraphFactory.DFSRecursive(g1, 0, new boolean[g1.getNodes().size()]);
+            DataBuilder.generateFile(t, "Test_DFSR");
             System.out.println();
-            
         }
             
     }
