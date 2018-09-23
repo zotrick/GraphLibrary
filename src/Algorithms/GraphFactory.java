@@ -9,11 +9,13 @@ import Elements.Edge;
 import Elements.Graph;
 import Elements.Node;
 import com.sun.org.apache.xalan.internal.xsltc.dom.BitArray;
+import java.util.AbstractQueue;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Random;
 
 /**
@@ -32,6 +34,7 @@ public class GraphFactory {
     public static Graph ErdosRenyi(int n, int m, boolean allowSelfEdge) {
         HashMap<Integer, Node> nodes = new HashMap<>();
         HashMap<String, Edge> edges = new HashMap<>();
+        boolean[][] adjMatrix = new boolean[n][n];
         Random rnd = new Random();
         for (int i = 0; i < n; i++) {
             nodes.put(i, new Node("N" + i));
@@ -42,6 +45,8 @@ public class GraphFactory {
                 Edge e = new Edge("E" + 0, 0, 0);
                 nodes.get(0).increaseDegree();
                 edges.put(nodes.get(0).getN_key() + "--" + nodes.get(0).getN_key(), e);
+                adjMatrix[0][0] = true;
+
             } else {
                 System.out.println("No Edges have been created, allow to create edges to itself");
             }
@@ -59,9 +64,11 @@ public class GraphFactory {
 //                Edge e = new Edge("E" + i);
                 Edge e = new Edge("E" + i, n1, n2);
                 edges.put(nodes.get(n1).getN_key() + "--" + nodes.get(n2).getN_key(), e);
+                adjMatrix[n1][n2] = true;
+                adjMatrix[n2][n1] = true;
             }
         }
-        Graph g = new Graph(false, n, nodes, edges);
+        Graph g = new Graph(false, n, nodes, edges, adjMatrix);
         return g;
     }
 
@@ -76,6 +83,7 @@ public class GraphFactory {
         HashMap<Integer, Node> nodes = new HashMap<>();
         HashMap<String, Edge> edges = new HashMap<>();
         Random rnd = new Random();
+        boolean[][] adjMatrix = new boolean[n][n];
         p /= 100;
         for (int i = 0; i < n; i++) {
             nodes.put(i, new Node("N" + i));
@@ -86,6 +94,7 @@ public class GraphFactory {
                 Edge e = new Edge("E" + 0, 0, 0);
                 nodes.get(0).increaseDegree();
                 edges.put(nodes.get(0).getN_key() + "--" + nodes.get(0).getN_key(), e);
+                adjMatrix[0][0] = true;
             } else {
                 System.out.println("No Edges have been created, allow to create edges to itself");
             }
@@ -98,6 +107,8 @@ public class GraphFactory {
                             Edge e = new Edge("E" + j, i, j);
                             if (Math.random() <= p) {
                                 edges.put(nodes.get(i).getN_key() + "--" + nodes.get(j).getN_key(), e);
+                                adjMatrix[i][j] = true;
+                                adjMatrix[j][i] = true;
                             }
                         }
                     } else {
@@ -105,12 +116,14 @@ public class GraphFactory {
                         Edge e = new Edge("E" + j, i, j);
                         if (Math.random() <= p) {
                             edges.put(nodes.get(i).getN_key() + "--" + nodes.get(j).getN_key(), e);
+                            adjMatrix[i][j] = true;
+                            adjMatrix[j][i] = true;
                         }
                     }
                 }
             }
         }
-        Graph g = new Graph(false, n, nodes, edges);
+        Graph g = new Graph(false, n, nodes, edges, adjMatrix);
         return g;
     }
 
@@ -126,7 +139,7 @@ public class GraphFactory {
         HashMap<String, Edge> edges = new HashMap<>();
         Random rnd = new Random();
         r /= 100;
-
+        boolean[][] adjMatrix = new boolean[n][n];
         for (int i = 0; i < n; i++) {
             nodes.put(i, new Node(("N" + i), rnd.nextDouble(), rnd.nextDouble()));
         }
@@ -137,6 +150,7 @@ public class GraphFactory {
 //                Edge e = new Edge("E" + 0);
                 Edge e = new Edge("E" + 0, 0, 0);
                 edges.put(nodes.get(0).getN_key() + "--" + nodes.get(0).getN_key(), e);
+                adjMatrix[0][0] = true;
             }
         } else {
             for (int i = 0; i < n; i++) {
@@ -153,6 +167,8 @@ public class GraphFactory {
 //                                Edge e = new Edge("E" + i);
                                 Edge e = new Edge("E" + i, i, j);
                                 edges.put(n1.getN_key() + "--" + n2.getN_key(), e);
+                                adjMatrix[i][j] = true;
+                                adjMatrix[j][i] = true;
                             }
                         }
                     } else {
@@ -166,12 +182,14 @@ public class GraphFactory {
 //                            Edge e = new Edge("E" + i);
                             Edge e = new Edge("E" + i, i, j);
                             edges.put(n1.getN_key() + "--" + n2.getN_key(), e);
+                            adjMatrix[i][j] = true;
+                            adjMatrix[j][i] = true;
                         }
                     }
                 }
             }
         }
-        Graph g = new Graph(false, n, nodes, edges);
+        Graph g = new Graph(false, n, nodes, edges, adjMatrix);
         return g;
     }
 
@@ -185,6 +203,7 @@ public class GraphFactory {
     public static Graph BarabasiAlbert(int n, double d, boolean allowSelfEdge) {
         HashMap<Integer, Node> nodes = new HashMap<>();
         HashMap<String, Edge> edges = new HashMap<>();
+        boolean[][] adjMatrix = new boolean[n][n];
         double prob = 0;
         for (int i = 0; i < n; i++) {
             nodes.put(i, new Node(("N" + i)));
@@ -200,6 +219,8 @@ public class GraphFactory {
 //                            Edge e = new Edge("E" + nE);
                             Edge e = new Edge("E" + nE, i, j);
                             edges.put(nodes.get(i).getN_key() + "--" + nodes.get(j).getN_key(), e);
+                            adjMatrix[i][j] = true;
+                            adjMatrix[j][i] = true;
                             nodes.get(i).increaseDegree();
                             if (j != i) {
                                 nodes.get(j).increaseDegree();
@@ -211,7 +232,7 @@ public class GraphFactory {
                 }
             }
         }
-        Graph g = new Graph(false, n, nodes, edges);
+        Graph g = new Graph(false, n, nodes, edges, adjMatrix);
         return g;
     }
 
@@ -222,8 +243,6 @@ public class GraphFactory {
      * @return t BFS Tree
      */
     public static Graph BFS(Graph g, int s) {
-        HashMap<HashMap<Integer, Edge>, Node> hg = new HashMap<>();
-
         LinkedList<LinkedList<Node>> parentLayer = new LinkedList<>();
         boolean[] discovered = new boolean[g.getNodes().size()];
         HashMap<String, Edge> edges = new HashMap<>();
@@ -231,14 +250,14 @@ public class GraphFactory {
         parentLayer.add(new LinkedList<>());
         parentLayer.get(0).add(g.getNodes().get(s));
         int i = 0;
-        Iterator<Map.Entry<String, Edge>> it2;
+        Iterator<Map.Entry<String, Edge>> it;
         while (!parentLayer.get(i).isEmpty()) {
             LinkedList<Node> childLayer = new LinkedList<>();
             for (int j = 0; j < parentLayer.get(i).size(); j++) {
-                it2 = g.getEdges().entrySet().iterator();
-                while (it2.hasNext()) {
+                it = g.getEdges().entrySet().iterator();
+                while (it.hasNext()) {
                     int n = parentLayer.get(i).get(j).getIkey();
-                    Map.Entry<String, Edge> edge = it2.next();
+                    Map.Entry<String, Edge> edge = it.next();
                     Edge e = edge.getValue();
                     if (n == e.getN1()) {
                         if (!discovered[e.getN2()]) {
@@ -253,11 +272,65 @@ public class GraphFactory {
                             edges.put(edge.getKey(), e);
                         }
                     }
-
                 }
             }
             parentLayer.add(childLayer);
             i++;
+        }
+        Graph t = new Graph(false, g.getN(), g.getNodes(), edges);
+        return t;
+    }
+
+    /**
+     *
+     * @param g Graph to check
+     * @param u Initial node
+     * @return t DFS Tree
+     */
+    public static Graph DFSIterative(Graph g, int u) {
+        boolean[] discovered = new boolean[g.getN()];
+        HashMap<String, Edge> edges = new HashMap<>();
+        LinkedList<Node> stack = new LinkedList<>();
+        stack.add(g.getNodes().get(u));
+        ArrayList<Integer> ed = new ArrayList<>();
+        Iterator<Map.Entry<String, Edge>> it;
+        boolean[][] am = g.getAdjMatrix();
+//        ed[0] = u;
+        while (!stack.isEmpty()) {
+            int n = stack.get(0).getIkey();
+            stack.remove(0);
+            if (!discovered[n]) {
+                ed.add(n);
+                discovered[n] = true;
+//                 String key ="N"+n+"--N"+i;
+//                 edges.put(key, new Edge(key,n,i));
+
+            }
+//                ed[x] = n;
+//                x++;
+            for (int j = 0; j < am.length; j++) {
+                if (am[n][j] && !discovered[j]) {
+                    stack.add(g.getNodes().get(j));
+//                        String key ="N"+n+"--N"+j;
+//                        edges.put(key, new Edge(key,n,j));
+                }
+            }
+//            it = g.getEdges().entrySet().iterator();
+//            while (it.hasNext()) {
+//                Map.Entry<String, Edge> edge = it.next();
+//                Edge e = edge.getValue();
+//                if (n == e.getN1() && !discovered[e.getN2()]) {
+//                    stack.add(g.getNodes().get(e.getN2()));
+////                            edges.put(edge.getKey(), e);
+//                } else if (n == e.getN2() && !discovered[e.getN1()]) {
+//                    stack.add(g.getNodes().get(e.getN1()));
+////                            edges.put(edge.getKey(), e);
+//                }
+//            }
+        }
+        for (int j = 0; j < ed.size() - 1; j++) {
+            String key = "N" + ed.get(j) + "--N" + ed.get(j + 1);
+            edges.put(key, new Edge(key, ed.get(j), ed.get(j + 1)));
         }
         Graph t = new Graph(false, g.getN(), g.getNodes(), edges);
         return t;
@@ -272,14 +345,11 @@ public class GraphFactory {
      * @return t DFS Tree
      */
     public static Graph DFSRecursive(Graph g, int n, boolean[] discovered) {
-//        boolean[] discovered = new boolean[g.getNodes().size()];
-
         discovered[n] = true;
         Iterator<Map.Entry<String, Edge>> it2 = g.getEdges().entrySet().iterator();
-         
         int i = n;
         while (it2.hasNext()) {
-           Map.Entry<String, Edge> edge = it2.next();
+            Map.Entry<String, Edge> edge = it2.next();
             Edge e = edge.getValue();
             if (i == e.getN1()) {
                 if (!discovered[e.getN2()]) {
@@ -293,9 +363,8 @@ public class GraphFactory {
                 }
             }
         }
-        
-//        System.out.println();
         Graph t = new Graph(false, g.getN(), g.getNodes(), edgesDFSR);
         return t;
     }
+
 }

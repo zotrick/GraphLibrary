@@ -56,12 +56,15 @@ public class Test {
             DataBuilder.generateFile(t2, "Test_BFS_Barabasi");
     }
     public static void main(String args[]){
+        
 //          generateGraphsTest();
 //            generateBFSTest();
-            Graph g1 = GraphFactory.BarabasiAlbert(500, 20, false);
-            DataBuilder.generateFile(g1, "Test_Graph_DR");
-            Graph t = GraphFactory.DFSRecursive(g1, 0, new boolean[g1.getNodes().size()]);
-            DataBuilder.generateFile(t, "Test_DFSR");
+            Graph g = GraphFactory.ErdosRenyi(10, 20, false);
+            DataBuilder.generateFile(g, "Graph_DFS");
+            Graph t = GraphFactory.DFSIterative(g, 0);
+            DataBuilder.generateFile(t, "Tree_DFSI");
+            Graph t2 = GraphFactory.DFSRecursive(g, 0, new boolean[g.getN()]);
+            DataBuilder.generateFile(t2, "Tree_DFSR");
             System.out.println();
         }
             

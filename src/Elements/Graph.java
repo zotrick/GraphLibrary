@@ -17,6 +17,7 @@ public class Graph {
     private int n,m;
     private HashMap<Integer,Node> nodes;
     private HashMap<String,Edge> edges;
+    private boolean [][] adjMatrix;
 
     /**
      * 
@@ -43,13 +44,16 @@ public class Graph {
      * @param n Number of nodes
      * @param nodes List of nodes
      * @param edges  List of edges
+     * @param adjMatrix AdjacencyMatrix
      */
-    public Graph(boolean isDirected, int n, HashMap<Integer, Node> nodes, HashMap<String, Edge> edges) {
+    public Graph(boolean isDirected, int n, HashMap<Integer, Node> nodes, HashMap<String, Edge> edges, boolean[][] adjMatrix) {
         this.isDirected = isDirected;
         this.n = n;
         this.m = edges.size();
         this.nodes = nodes;
         this.edges = edges;
+        this.adjMatrix = adjMatrix;
+//        createAdjacencyMatrix();
     }
     
     /**
@@ -60,6 +64,21 @@ public class Graph {
     public Graph(int n, boolean d){
         this.n = n;
         this.isDirected = d;
+    }
+
+    /**
+     * 
+     * @param isDirected 
+     * @param n Number of nodes
+     * @param nodes List of nodes
+     * @param edges  List of edges
+     */
+    public Graph(boolean isDirected, int n, HashMap<Integer, Node> nodes, HashMap<String, Edge> edges) {
+        this.isDirected = isDirected;
+        this.n = n;
+        this.m = edges.size();
+        this.nodes = nodes;
+        this.edges = edges;
     }
 
     public int getN() {
@@ -86,4 +105,9 @@ public class Graph {
         this.edges = edges;
         this.m = edges.size();
     }
+
+    public boolean[][] getAdjMatrix() {
+        return adjMatrix;
+    }
+    
 }
