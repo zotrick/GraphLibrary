@@ -67,8 +67,11 @@ public class Test {
 //        DataBuilder.generateFile(g, "Graph_DFS");
         Graph t = GraphFactory.DFSIterative(g, 0);
         DataBuilder.generateFile(t, "Tree_DFSI");
+        
 //        Graph t2 = GraphFactory.DFSRecursive(g, 0, new boolean[g.getN()]);
 //        DataBuilder.generateFile(t2, "Tree_DFSR");
+        Graph t3 = GraphFactory.BFS(g, 0);
+        DataBuilder.generateFile(t3, "Tree_BFS");
         System.out.println();
     }
 

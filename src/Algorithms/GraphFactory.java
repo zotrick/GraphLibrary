@@ -284,54 +284,42 @@ public class GraphFactory {
     /**
      *
      * @param g Graph to check
-     * @param u Initial node
+     * @param s Initial node
      * @return t DFS Tree
      */
-    public static Graph DFSIterative(Graph g, int u) {
+    public static Graph DFSIterative(Graph g, int s) {
         boolean[] discovered = new boolean[g.getN()];
         HashMap<String, Edge> edges = new HashMap<>();
         LinkedList<Node> stack = new LinkedList<>();
-        stack.add(g.getNodes().get(u));
-        ArrayList<Integer> ed = new ArrayList<>();
+        stack.add(g.getNodes().get(s));
         Iterator<Map.Entry<String, Edge>> it;
-        boolean[][] am = g.getAdjMatrix();
-//        ed[0] = u;
+        ArrayList<Integer> edg = new ArrayList<>();
+        int[] parent = new int[g.getN()];
+       int i =0;
         while (!stack.isEmpty()) {
             int n = stack.get(0).getIkey();
-            stack.remove(0);
+             stack.remove(0);
             if (!discovered[n]) {
-                ed.add(n);
                 discovered[n] = true;
-//                 String key ="N"+n+"--N"+i;
-//                 edges.put(key, new Edge(key,n,i));
-
-            }
-//                ed[x] = n;
-//                x++;
-            for (int j = 0; j < am.length; j++) {
-                if (am[n][j] && !discovered[j]) {
-                    stack.add(g.getNodes().get(j));
-//                        String key ="N"+n+"--N"+j;
-//                        edges.put(key, new Edge(key,n,j));
+                edg.add(n);
+                if (n != s) {
+                    edges.put("N"+n+"--N"+parent[n], new Edge("E"+i++,n,parent[n]));
+                    }
+                it = g.getEdges().entrySet().iterator();
+                while (it.hasNext()) {
+                    Map.Entry<String, Edge> edge = it.next();
+                    Edge e = edge.getValue();
+                    if (n == e.getN1() && !discovered[e.getN2()]) {
+                        stack.addFirst(g.getNodes().get(e.getN2()));
+                        parent[e.getN2()] = n;
+                    } else if (n == e.getN2() && !discovered[e.getN1()]) {
+                        stack.addFirst(g.getNodes().get(e.getN1()));
+                        parent[e.getN1()] = n;
+                    }
                 }
             }
-//            it = g.getEdges().entrySet().iterator();
-//            while (it.hasNext()) {
-//                Map.Entry<String, Edge> edge = it.next();
-//                Edge e = edge.getValue();
-//                if (n == e.getN1() && !discovered[e.getN2()]) {
-//                    stack.add(g.getNodes().get(e.getN2()));
-////                            edges.put(edge.getKey(), e);
-//                } else if (n == e.getN2() && !discovered[e.getN1()]) {
-//                    stack.add(g.getNodes().get(e.getN1()));
-////                            edges.put(edge.getKey(), e);
-//                }
-//            }
         }
-        for (int j = 0; j < ed.size() - 1; j++) {
-            String key = "N" + ed.get(j) + "--N" + ed.get(j + 1);
-            edges.put(key, new Edge(key, ed.get(j), ed.get(j + 1)));
-        }
+        
         Graph t = new Graph(false, g.getN(), g.getNodes(), edges);
         return t;
     }
