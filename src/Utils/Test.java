@@ -11,6 +11,8 @@ import Elements.Graph;
 import Elements.Graph.generateMethod;
 import Elements.Graph.treeMethod;
 import Elements.Node;
+import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -163,22 +165,37 @@ public class Test {
 //      generateBFSTest();
 //      Graph g = generateCustomGraph();
         generateBFS_DFS_Test();
+//        automaticTest();
 
     }
-    private static List<Object[]> testParameters;
+    private static ArrayList<Object[]> testParameters;
     public static void automaticTest(){
         final int little = 30;
         //Erdos edges,Gilbert Prob, SimpleGeo distance, Barabasi maxDegree
         final int[] uniqueP = new int[]{30,50,20,20}; 
         final int lot = 500;
+        testParameters = new ArrayList<>();
         
-        testParameters.add(new Object[]{little,uniqueP,generateMethod.Erdos,treeMethod.BFS});
+        testParameters.add(new Object[]{little,uniqueP,generateMethod.values(),treeMethod.values()});
+        testParameters.add(new Object[]{lot,uniqueP,generateMethod.values(),treeMethod.values()});
     
         executeTest();
         
     }
 
     private static void executeTest() {
+        File folder = new File("C:\\Users\\Juan Eduardo\\Desktop\\Graphs");
+        
+        for(Object[] p: testParameters){
+            System.out.println();
+            for(Object method: p){
+                Graph g = new Graph((int) p[0], false);
+                
+                
+            }
+        }
+        
+        
         
     }
 
