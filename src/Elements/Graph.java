@@ -18,7 +18,19 @@ public class Graph {
     private HashMap<Integer,Node> nodes;
     private HashMap<String,Edge> edges;
     private boolean [][] adjMatrix;
-
+    
+    private generateMethod generateMethod;
+    private treeMethod treeMethod;
+    
+    
+    
+    public enum generateMethod{
+        Erdos,Gilbert,SimpleGeo,Barabasi
+    }
+    
+    public enum treeMethod{
+        BFS,DFSIterative, DFSRecursive
+    }
     /**
      * 
      * @param isDirected 

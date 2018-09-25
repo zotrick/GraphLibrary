@@ -8,8 +8,11 @@ package Utils;
 import Algorithms.GraphFactory;
 import Elements.Edge;
 import Elements.Graph;
+import Elements.Graph.generateMethod;
+import Elements.Graph.treeMethod;
 import Elements.Node;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  *
@@ -161,6 +164,22 @@ public class Test {
 //      Graph g = generateCustomGraph();
         generateBFS_DFS_Test();
 
+    }
+    private static List<Object[]> testParameters;
+    public static void automaticTest(){
+        final int little = 30;
+        //Erdos edges,Gilbert Prob, SimpleGeo distance, Barabasi maxDegree
+        final int[] uniqueP = new int[]{30,50,20,20}; 
+        final int lot = 500;
+        
+        testParameters.add(new Object[]{little,uniqueP,generateMethod.Erdos,treeMethod.BFS});
+    
+        executeTest();
+        
+    }
+
+    private static void executeTest() {
+        
     }
 
    
