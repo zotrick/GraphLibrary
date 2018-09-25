@@ -12,7 +12,7 @@ package Elements;
 public class Edge {
     public String e_name;
     public double weight;
-    private int n1,n2;
+    private int u,v;
     
     /**
      * 
@@ -35,25 +35,22 @@ public class Edge {
      /**
      * 
      * @param e_name name or key of the edge
-     * @param n1 number of node 1
-     * @param n2 number of node 2
+     * @param u number of node 1
+     * @param v number of node 2
      */
-    public Edge(String e_name,int n1,int n2) {
+    public Edge(String e_name,int u,int v) {
         this.e_name = e_name;
-        this.n1 = n1;
-        this.n2 = n2;
+        this.u = u;
+        this.v = v;
     }
 
-    public int getN1() {
-        return n1;
+    public int getU() {
+        return u;
     }
 
-    public int getN2() {
-        return n2;
+    public int getV() {
+        return v;
     }
-    
-    
-    
     public Edge() {
     }
         

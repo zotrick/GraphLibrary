@@ -28,7 +28,6 @@ public class DataBuilder {
      * @param name Name of file (without extension)
      */
     public static void generateFile(Graph g, String name) {
-
         File f = new File("C:\\Users\\Juan Eduardo\\Desktop\\Graphs\\" + name + ".gv");
         String struct = "graph G1 {\n";
         Iterator<Map.Entry<Integer, Node>> it2 = g.getNodes().entrySet().iterator();
@@ -41,7 +40,6 @@ public class DataBuilder {
             struct += it.next().getKey() + ";\n";
         }
         struct += "}";
-
         PrintWriter pw;
         try {
             pw = new PrintWriter(f);
@@ -50,6 +48,5 @@ public class DataBuilder {
         } catch (FileNotFoundException ex) {
             Logger.getLogger(DataBuilder.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 }
