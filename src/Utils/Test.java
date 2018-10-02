@@ -164,8 +164,19 @@ public class Test {
 //      generateGraphsTest();
 //      generateBFSTest();
 //      Graph g = generateCustomGraph();
-        generateBFS_DFS_Test();
+//        generateBFS_DFS_Test();
 //        automaticTest();
+
+//        Graph gOP = GraphFactory.BarabasiAlbert(5000, 10, false);
+//        DataBuilder.generateFile(gOP, "OP");
+//        Graph gOP = GraphFactory.ErdosRenyi(15000, 8000, false);
+//        DataBuilder.generateFile(gOP, "ErdosOP");
+
+//        Graph gOP = GraphFactory.SimpleGeographic(2000, 10, false);
+//        DataBuilder.generateFile(gOP, "GeoOP");
+        
+        Graph bOP = GraphFactory.ErdosRenyi(20, 30, false);
+        DataBuilder.generateFile(bOP, "BarabasiOP");
 
     }
     private static ArrayList<Object[]> testParameters;
@@ -189,7 +200,7 @@ public class Test {
         for(Object[] p: testParameters){
             System.out.println();
             for(Object method: p){
-                Graph g = new Graph((int) p[0], false);
+                Graph g = new Graph((int) p[0], false); // I need to change constructor to get all parameters...
                 
                 
             }

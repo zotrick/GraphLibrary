@@ -59,7 +59,7 @@ public class GraphFactory {
                 }
                 nodes.get(n1).increaseDegree();
                 nodes.get(n2).increaseDegree();
-                Edge e = new Edge("E" + i, n1, n2);
+                Edge e = new Edge("E" + i, n1, n2,rnd.nextInt(n));
                 edges.put(nodes.get(n1).getN_key() + "--" + nodes.get(n2).getN_key(), e);
                 adjMatrix[n1][n2] = true;
                 adjMatrix[n2][n1] = true;
@@ -343,5 +343,40 @@ public class GraphFactory {
         }
         Graph t = new Graph(false, g.getN(), g.getNodes(), edgesDFSR);
         return t;
+    }
+
+    public static Graph Dijkstra(Graph g, int l){
+        LinkedList<Node> S = new LinkedList<>();
+        int[] distances = new int[g.getM()];
+        
+        S.add(g.getNodes().get(l));
+        distances[l] = 0;
+        
+        HashMap<String, Edge> edges = new HashMap<>();
+        Iterator<Map.Entry<String, Edge>> it;
+        
+        while(S.size()!= g.getNodes().size()){
+            it = g.getEdges().entrySet().iterator();
+            
+            while(it.hasNext()){
+                Map.Entry<String, Edge> edge = it.next();
+                Edge e = edge.getValue();
+                
+                    if(e.getU()== S.get(l).ikey){
+                        int aux = distances[e.getV()]+e.weight;
+                        if(distances[e.getU()]<aux){
+                            S.add(g.getNodes().get(e.getV()));
+                        }
+                    }else if(e.getV()== S.get(l).ikey){
+                        int aux = distances[e.getU()]+e.weight;
+                        if(distances[e.getV()]<aux){
+                            S.add(g.getNodes().get(e.getU()));
+                        }
+                    }
+            }
+            
+        }
+        Graph d = new Graph(5, false);
+        return d;
     }
 }
