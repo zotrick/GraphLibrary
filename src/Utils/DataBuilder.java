@@ -37,7 +37,8 @@ public class DataBuilder {
         struct += "\n";
         Iterator<Map.Entry<String, Edge>> it = g.getEdges().entrySet().iterator();
         while (it.hasNext()) {
-            struct += it.next().getKey() + ";\n";
+            Map.Entry<String, Edge> ed = it.next();
+            struct += ed.getKey() + " [weight="+ed.getValue().weight+"];\n";
         }
         struct += "}";
         PrintWriter pw;

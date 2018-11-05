@@ -32,14 +32,14 @@ public class Test {
         nodes.put(5, new Node("N5"));
         nodes.put(6, new Node("N6"));
         HashMap<String, Edge> edges = new HashMap<>();
-        edges.put("N0--N1", new Edge("E0", 0, 1));
-        edges.put("N0--N2", new Edge("E1", 0, 2));
-        edges.put("N0--N4", new Edge("E2", 0, 4));
-        edges.put("N1--N3", new Edge("E3", 1, 3));
-        edges.put("N1--N5", new Edge("E4", 1, 5));
-        edges.put("N2--N6", new Edge("E5", 2, 6));
-        edges.put("N6--N4", new Edge("E6", 6, 4));
-        edges.put("N4--N6", new Edge("E7", 4, 6));
+        edges.put("N0--N1", new Edge("E0", 0, 1,2));
+        edges.put("N0--N2", new Edge("E1", 0, 2,3));
+        edges.put("N0--N4", new Edge("E2", 0, 4,5));
+        edges.put("N1--N3", new Edge("E3", 1, 3,7));
+        edges.put("N1--N5", new Edge("E4", 1, 5,2));
+        edges.put("N2--N6", new Edge("E5", 2, 6,7));
+        edges.put("N6--N4", new Edge("E6", 6, 4,2));
+        edges.put("N4--N6", new Edge("E7", 4, 6,1));
 
         Graph g = new Graph(false, nodes.size(), nodes, edges);
         return g;
@@ -175,9 +175,13 @@ public class Test {
 //        Graph gOP = GraphFactory.SimpleGeographic(2000, 10, false);
 //        DataBuilder.generateFile(gOP, "GeoOP");
         
-        Graph bOP = GraphFactory.ErdosRenyi(20, 30, false);
-        DataBuilder.generateFile(bOP, "BarabasiOP");
-
+//        Graph Erdos = GraphFactory.ErdosRenyi(20, 30, false);
+//        DataBuilder.generateFile(Erdos, "ErdosTest");
+//        Graph di = GraphFactory.Dijkstra(Erdos, 0);
+//        DataBuilder.generateFile(di, "Dijkstra");
+            Graph g = generateCustomGraph();
+            DataBuilder.generateFile(g, "customTest");
+            Graph dj = GraphFactory.Dijkstra(g, 0);
     }
     private static ArrayList<Object[]> testParameters;
     public static void automaticTest(){

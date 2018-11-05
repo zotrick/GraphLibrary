@@ -59,7 +59,7 @@ public class GraphFactory {
                 }
                 nodes.get(n1).increaseDegree();
                 nodes.get(n2).increaseDegree();
-                Edge e = new Edge("E" + i, n1, n2,rnd.nextInt(n));
+                Edge e = new Edge("E" + i, n1, n2,rnd.nextInt(n)+1);
                 edges.put(nodes.get(n1).getN_key() + "--" + nodes.get(n2).getN_key(), e);
                 adjMatrix[n1][n2] = true;
                 adjMatrix[n2][n1] = true;
@@ -99,7 +99,7 @@ public class GraphFactory {
                 for (int j = 0; j < n; j++) {
                     if (!allowSelfEdge) {
                         if (i != j) {
-                            Edge e = new Edge("E" + j, i, j);
+                            Edge e = new Edge("E" + j, i, j,rnd.nextInt(n));
                             if (Math.random() <= p) {
                                 edges.put(nodes.get(i).getN_key() + "--" + nodes.get(j).getN_key(), e);
                                 adjMatrix[i][j] = true;
@@ -107,7 +107,7 @@ public class GraphFactory {
                             }
                         }
                     } else {
-                        Edge e = new Edge("E" + j, i, j);
+                        Edge e = new Edge("E" + j, i, j,rnd.nextInt(n));
                         if (Math.random() <= p) {
                             edges.put(nodes.get(i).getN_key() + "--" + nodes.get(j).getN_key(), e);
                             adjMatrix[i][j] = true;
@@ -157,7 +157,7 @@ public class GraphFactory {
                             if (auxdistance <= r) {
                                 n1.increaseDegree();
                                 n1.increaseDegree();
-                                Edge e = new Edge("E" + i, i, j);
+                                Edge e = new Edge("E" + i, i, j,rnd.nextInt(n));
                                 edges.put(n1.getN_key() + "--" + n2.getN_key(), e);
                                 adjMatrix[i][j] = true;
                                 adjMatrix[j][i] = true;
@@ -171,7 +171,7 @@ public class GraphFactory {
                         if (auxdistance <= r) {
                             n1.increaseDegree();
                             n1.increaseDegree();
-                            Edge e = new Edge("E" + i, i, j);
+                            Edge e = new Edge("E" + i, i, j,rnd.nextInt(n));
                             edges.put(n1.getN_key() + "--" + n2.getN_key(), e);
                             adjMatrix[i][j] = true;
                             adjMatrix[j][i] = true;
@@ -196,6 +196,7 @@ public class GraphFactory {
         HashMap<String, Edge> edges = new HashMap<>();
         boolean[][] adjMatrix = new boolean[n][n];
         double prob = 0;
+        Random rnd = new Random();
         for (int i = 0; i < n; i++) {
             nodes.put(i, new Node(("N" + i)));
         }
@@ -207,7 +208,7 @@ public class GraphFactory {
                     if (j != i || allowSelfEdge) {
                         prob = 1 - (nodes.get(j).getDegree() / d);
                         if (Math.random() <= prob) {
-                            Edge e = new Edge("E" + nE, i, j);
+                            Edge e = new Edge("E" + nE, i, j,rnd.nextInt(n));
                             edges.put(nodes.get(i).getN_key() + "--" + nodes.get(j).getN_key(), e);
                             adjMatrix[i][j] = true;
                             adjMatrix[j][i] = true;
@@ -362,15 +363,17 @@ public class GraphFactory {
                 Map.Entry<String, Edge> edge = it.next();
                 Edge e = edge.getValue();
                 
-                    if(e.getU()== S.get(l).ikey){
+                    if(e.getU()== S.get(l).ikey && (!S.contains(g.getNodes().get(e.getV())))){
                         int aux = distances[e.getV()]+e.weight;
                         if(distances[e.getU()]<aux){
                             S.add(g.getNodes().get(e.getV()));
+                            System.out.println(e.getV()+"-");
                         }
-                    }else if(e.getV()== S.get(l).ikey){
+                    }else if(e.getV()== S.get(l).ikey && (!S.contains(g.getNodes().get(e.getU())))){
                         int aux = distances[e.getU()]+e.weight;
                         if(distances[e.getV()]<aux){
                             S.add(g.getNodes().get(e.getU()));
+                            System.out.println(e.getU()+"-");
                         }
                     }
             }
