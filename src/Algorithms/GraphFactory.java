@@ -59,7 +59,8 @@ public class GraphFactory {
                 }
                 nodes.get(n1).increaseDegree();
                 nodes.get(n2).increaseDegree();
-                Edge e = new Edge("E" + i, n1, n2,rnd.nextInt(n)+1);
+                //Edge e = new Edge("E" + i, n1, n2,rnd.nextInt(n)+1);
+                Edge e = new Edge("E" + i, n1, n2);
                 edges.put(nodes.get(n1).getN_key() + "--" + nodes.get(n2).getN_key(), e);
                 adjMatrix[n1][n2] = true;
                 adjMatrix[n2][n1] = true;
@@ -345,6 +346,19 @@ public class GraphFactory {
         Graph t = new Graph(false, g.getN(), g.getNodes(), edgesDFSR);
         return t;
     }
+    
+    public static Graph EdgeValues(Graph g, double min, double max){
+        
+        //HashMap<String, Edge> edges = g.getEdges();
+        Iterator<Map.Entry<String, Edge>> it = g.getEdges().entrySet().iterator();
+        Random rnd = new Random();
+        while (it.hasNext()) {
+            
+            it.next().getValue().setWeight((rnd.nextDouble()*(max-min))+ min);
+        }
+              
+        return g;
+    }
 
     public static Graph Dijkstra(Graph g, int l){
         LinkedList<Node> S = new LinkedList<>();
@@ -364,13 +378,13 @@ public class GraphFactory {
                 Edge e = edge.getValue();
                 
                     if(e.getU()== S.get(l).ikey && (!S.contains(g.getNodes().get(e.getV())))){
-                        int aux = distances[e.getV()]+e.weight;
+                        double aux = distances[e.getV()]+e.weight;
                         if(distances[e.getU()]<aux){
                             S.add(g.getNodes().get(e.getV()));
                             System.out.println(e.getV()+"-");
                         }
                     }else if(e.getV()== S.get(l).ikey && (!S.contains(g.getNodes().get(e.getU())))){
-                        int aux = distances[e.getU()]+e.weight;
+                        double aux = distances[e.getU()]+e.weight;
                         if(distances[e.getV()]<aux){
                             S.add(g.getNodes().get(e.getU()));
                             System.out.println(e.getU()+"-");
@@ -379,6 +393,12 @@ public class GraphFactory {
             }
             
         }
+        Graph d = new Graph(5, false);
+        return d;
+    }
+    
+    public static Graph Kruskal(Graph g){
+        
         Graph d = new Graph(5, false);
         return d;
     }

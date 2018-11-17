@@ -175,13 +175,20 @@ public class Test {
 //        Graph gOP = GraphFactory.SimpleGeographic(2000, 10, false);
 //        DataBuilder.generateFile(gOP, "GeoOP");
         
-//        Graph Erdos = GraphFactory.ErdosRenyi(20, 30, false);
-//        DataBuilder.generateFile(Erdos, "ErdosTest");
+       //Graph Erdos = Graph.ErdosRenyi(20, 30, false);
+       Graph custom = generateCustomGraph();
+        //DataBuilder.generateFile(Erdos, "ErdosTest");
+        
+       DataBuilder.generateFile(custom, "CustomTest");
+       //DataBuilder.generateFile(Graph.EdgeValues(custom, 10, 22), "CustomTest");
+       Graph di = Graph.Dijkstra(custom, 0);
+       DataBuilder.generateFile(di, "DijkstraCustom");
+       
 //        Graph di = GraphFactory.Dijkstra(Erdos, 0);
 //        DataBuilder.generateFile(di, "Dijkstra");
-            Graph g = generateCustomGraph();
-            DataBuilder.generateFile(g, "customTest");
-            Graph dj = GraphFactory.Dijkstra(g, 0);
+        //    Graph g = generateCustomGraph();
+         //   DataBuilder.generateFile(g, "customTest");
+         //   Graph dj = GraphFactory.Dijkstra(g, 0);
     }
     private static ArrayList<Object[]> testParameters;
     public static void automaticTest(){

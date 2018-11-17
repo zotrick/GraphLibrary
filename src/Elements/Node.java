@@ -5,17 +5,20 @@
  */
 package Elements;
 
+import java.util.Comparator;
+
 /**
  *
  * @author Eduardo Lujan - Zotrick
  */
-public class Node {
+public class Node implements Comparable<Node> {
 
     public String n_key;
     public String color;
     public int degree;
     public double x, y;
     public int ikey;
+    public double distance = Double.POSITIVE_INFINITY;
 
     /**
      *
@@ -25,7 +28,7 @@ public class Node {
     public Node(String n_key, String color) {
         this.degree = 0;
         this.n_key = n_key;
-        this.ikey =Integer.parseInt(n_key.substring(1, n_key.length()));
+        this.ikey = Integer.parseInt(n_key.substring(1, n_key.length()));
         this.color = color;
     }
 
@@ -36,7 +39,7 @@ public class Node {
     public Node(String n_key) {
         this.degree = 0;
         this.n_key = n_key;
-        this.ikey =Integer.parseInt(n_key.substring(1, n_key.length()));
+        this.ikey = Integer.parseInt(n_key.substring(1, n_key.length()));
     }
 
     /**
@@ -47,7 +50,7 @@ public class Node {
      */
     public Node(String n_key, double x, double y) {
         this.n_key = n_key;
-        this.ikey =Integer.parseInt(n_key.substring(1, n_key.length()));
+        this.ikey = Integer.parseInt(n_key.substring(1, n_key.length()));
         this.x = x;
         this.y = y;
         this.degree = 0;
@@ -59,7 +62,7 @@ public class Node {
 
     public void setN_key(String n_key) {
         this.n_key = n_key;
-        this.ikey =Integer.parseInt(n_key.substring(1, n_key.length()));
+        this.ikey = Integer.parseInt(n_key.substring(1, n_key.length()));
     }
 
     public int getDegree() {
@@ -73,5 +76,23 @@ public class Node {
     public int getIkey() {
         return ikey;
     }
-    
+
+    public double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
+    }
+
+    @Override
+    public int compareTo(Node n2) {
+        if (this.distance > n2.getDistance()) {
+            return 1;
+        } else if (this.distance < n2.getDistance()) {
+            return -1;
+        } else {
+            return 0;
+        }
+    }
 }

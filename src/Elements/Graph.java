@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.PriorityQueue;
 import java.util.Random;
 
 /**
@@ -17,50 +18,51 @@ import java.util.Random;
  * @author Eduardo Lujan - Zotrick
  */
 public class Graph {
+
     final private boolean isDirected;
     private boolean allowSelfEdge;
-    private int n,m;
-    private HashMap<Integer,Node> nodes;
-    private HashMap<String,Edge> edges;
-    private boolean [][] adjMatrix;
-    
+    private int n, m;
+    private HashMap<Integer, Node> nodes;
+    private HashMap<String, Edge> edges;
+    private boolean[][] adjMatrix;
+
     private generateMethod generateMethod;
     private treeMethod treeMethod;
-    
-    
-    
-    public enum generateMethod{
-        Erdos,Gilbert,SimpleGeo,Barabasi
+
+    public enum generateMethod {
+        Erdos, Gilbert, SimpleGeo, Barabasi
     }
-    
-    public enum treeMethod{
-        BFS,DFSIterative, DFSRecursive
+
+    public enum treeMethod {
+        BFS, DFSIterative, DFSRecursive
     }
+
     /**
-     * 
-     * @param isDirected 
+     *
+     * @param isDirected
      */
     public Graph(boolean isDirected) {
         this.isDirected = isDirected;
     }
+
     /**
-     * 
+     *
      * @param n number of nodes
      * @param m number of edges
      * @param d is a directed Graph
      */
-    public Graph(int n, int m, boolean d){
+    public Graph(int n, int m, boolean d) {
         this.isDirected = d;
         this.n = n;
         this.m = m;
     }
 
     /**
-     * 
-     * @param isDirected 
+     *
+     * @param isDirected
      * @param n Number of nodes
      * @param nodes List of nodes
-     * @param edges  List of edges
+     * @param edges List of edges
      * @param adjMatrix AdjacencyMatrix
      */
     public Graph(boolean isDirected, int n, HashMap<Integer, Node> nodes, HashMap<String, Edge> edges, boolean[][] adjMatrix) {
@@ -72,23 +74,23 @@ public class Graph {
         this.adjMatrix = adjMatrix;
 //        createAdjacencyMatrix();
     }
-    
+
     /**
-     * 
+     *
      * @param n number of nodes
      * @param d is a directed Graph
      */
-    public Graph(int n, boolean d){
+    public Graph(int n, boolean d) {
         this.n = n;
         this.isDirected = d;
     }
 
     /**
-     * 
-     * @param isDirected 
+     *
+     * @param isDirected
      * @param n Number of nodes
      * @param nodes List of nodes
-     * @param edges  List of edges
+     * @param edges List of edges
      */
     public Graph(boolean isDirected, int n, HashMap<Integer, Node> nodes, HashMap<String, Edge> edges) {
         this.isDirected = isDirected;
@@ -126,7 +128,7 @@ public class Graph {
     public boolean[][] getAdjMatrix() {
         return adjMatrix;
     }
-    
+
     public static Graph ErdosRenyi(int n, int m, boolean allowSelfEdge) {
         HashMap<Integer, Node> nodes = new HashMap<>();
         HashMap<String, Edge> edges = new HashMap<>();
@@ -381,16 +383,16 @@ public class Graph {
         Iterator<Map.Entry<String, Edge>> it;
         ArrayList<Integer> edg = new ArrayList<>();
         int[] parent = new int[g.getN()];
-       int i =0;
+        int i = 0;
         while (!stack.isEmpty()) {
             int n = stack.get(0).getIkey();
-             stack.remove(0);
+            stack.remove(0);
             if (!discovered[n]) {
                 discovered[n] = true;
                 edg.add(n);
                 if (n != s) {
-                    edges.put("N"+n+"--N"+parent[n], new Edge("E"+i++,n,parent[n]));
-                    }
+                    edges.put("N" + n + "--N" + parent[n], new Edge("E" + i++, n, parent[n]));
+                }
                 it = g.getEdges().entrySet().iterator();
                 while (it.hasNext()) {
                     Map.Entry<String, Edge> edge = it.next();
@@ -405,7 +407,7 @@ public class Graph {
                 }
             }
         }
-        
+
         Graph t = new Graph(false, g.getN(), g.getNodes(), edges);
         return t;
     }
@@ -440,5 +442,86 @@ public class Graph {
         Graph t = new Graph(false, g.getN(), g.getNodes(), edgesDFSR);
         return t;
     }
-    
+
+    /**
+     *
+     * @param g graph to set Weigths
+     * @param min
+     * @param max
+     * @return
+     */
+    public static Graph EdgeValues(Graph g, double min, double max) {
+
+        Iterator<Map.Entry<String, Edge>> it = g.getEdges().entrySet().iterator();
+        Random rnd = new Random();
+        while (it.hasNext()) {
+            double value = (rnd.nextDouble() * (max - min)) + min;
+            it.next().getValue().setWeight(value);
+        }
+
+        return g;
+    }
+
+    public static Graph Dijkstra(Graph g, int s) {
+
+        PriorityQueue pq = new PriorityQueue();
+        int[] papadelachona = new int[g.getN()];
+        for (Node n : g.getNodes().values()){
+            pq.add(n);
+            papadelachona[n.ikey] = -1;
+        }
+        
+        LinkedList<Node> S = new LinkedList<>();
+        int[] distances = new int[g.getN()];
+        Node nodeS = g.getNodes().get(s);
+        nodeS.setDistance(0);
+        S.add(nodeS);
+        pq.remove(nodeS);
+        HashMap<String, Edge> edges = new HashMap<>();
+
+//        for (int i = 0; i < distances.length; i++) {
+//            distances[i] = -1; 
+//        }
+//       
+//        distances[s] = 0;
+        while (!pq.isEmpty()) {
+            System.out.println("pq: "+ pq.size());
+            
+            for (int i = 0; i < S.size(); i++) {
+                Iterator<Map.Entry<String, Edge>> it = g.getEdges().entrySet().iterator();
+            it = g.getEdges().entrySet().iterator();
+            //for (Node x : S) {
+                while (it.hasNext()) {
+                    Map.Entry<String, Edge> edge = it.next();
+                    Edge e = edge.getValue();
+                    if (e.getU() == S.get(i).ikey && (!S.contains(g.getNodes().get(e.getV())))) {
+                        Node v = g.getNodes().get(e.getV());
+                        double aux = S.get(i).getDistance() + e.weight;
+                        if(aux<v.getDistance()){
+                            edges.put(edge.getKey(), e);
+                            v.setDistance(aux);
+                            papadelachona[e.getV()] = e.getU();
+                            S.add(v);
+                            pq.remove(v);
+                           // i=0;
+                        }
+                        
+                    } else if (e.getV() == S.get(i).ikey && (!S.contains(g.getNodes().get(e.getU())))) {
+                        Node u = g.getNodes().get(e.getU());
+                        double aux = S.get(i).getDistance() + e.weight;
+                        if(aux<u.getDistance()){
+                            edges.put(edge.getKey(), e);
+                            u.setDistance(aux);
+                            papadelachona[e.getU()] = e.getV();
+                            S.add(u);
+                            pq.remove(u);
+                            //i=0;
+                        }
+                    }
+                }
+            }
+        }
+        Graph t = new Graph(false, g.getN(), g.getNodes(), edges);
+        return t;
+    }
 }

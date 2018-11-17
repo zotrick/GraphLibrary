@@ -9,10 +9,11 @@ package Elements;
  *
  * @author Eduardo Lujan - Zotrick
  */
-public class Edge {
+public class Edge implements Comparable<Edge>{
     public String e_name;
-    public int weight;
+    public double weight = 1;
     private int u,v;
+    
     
     /**
      * 
@@ -66,11 +67,26 @@ public class Edge {
         return v;
     }
     
-    public int getWeight() {
+    public double getWeight() {
         return weight;
     }
     
+    public void setWeight(double w) {
+        this.weight = w;
+    }
+    
     public Edge() {
+    }
+
+    @Override
+    public int compareTo(Edge e2) {
+        if (this.weight > e2.getWeight()) {
+            return 1;
+        } else if (this.weight < e2.getWeight()) {
+            return -1;
+        } else {
+            return 0;
+        }
     }
         
 }
