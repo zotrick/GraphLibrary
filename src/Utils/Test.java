@@ -31,17 +31,20 @@ public class Test {
         nodes.put(4, new Node("N4"));
         nodes.put(5, new Node("N5"));
         nodes.put(6, new Node("N6"));
+        
         HashMap<String, Edge> edges = new HashMap<>();
-        edges.put("N0--N1", new Edge("E0", 0, 1,2));
-        edges.put("N0--N2", new Edge("E1", 0, 2,3));
-        edges.put("N0--N4", new Edge("E2", 0, 4,5));
-        edges.put("N1--N3", new Edge("E3", 1, 3,7));
-        edges.put("N1--N5", new Edge("E4", 1, 5,2));
-        edges.put("N2--N6", new Edge("E5", 2, 6,7));
-        edges.put("N6--N4", new Edge("E6", 6, 4,2));
-        edges.put("N4--N6", new Edge("E7", 4, 6,1));
-
+        edges.put("N0--N1", new Edge("E0", 0, 1,2.00));
+        edges.put("N0--N2", new Edge("E1", 0, 2,3.00));
+        edges.put("N0--N4", new Edge("E2", 0, 4,5.00));
+        
+        edges.put("N1--N3", new Edge("E3", 1, 3,7.00));
+        edges.put("N1--N5", new Edge("E4", 1, 5,2.00));
+        edges.put("N2--N6", new Edge("E5", 2, 6,7.00));
+        edges.put("N6--N4", new Edge("E6", 6, 4,2.00));
+        edges.put("N4--N6", new Edge("E7", 4, 6,1.00));
+        
         Graph g = new Graph(false, nodes.size(), nodes, edges);
+        
         return g;
     }
 
@@ -175,14 +178,14 @@ public class Test {
 //        Graph gOP = GraphFactory.SimpleGeographic(2000, 10, false);
 //        DataBuilder.generateFile(gOP, "GeoOP");
         
-       //Graph Erdos = Graph.ErdosRenyi(20, 30, false);
-       Graph custom = generateCustomGraph();
+       Graph Erdos = Graph.EdgeValues(Graph.ErdosRenyi(20, 30, false),1,12);
+//       Graph custom = generateCustomGraph();
         //DataBuilder.generateFile(Erdos, "ErdosTest");
         
-       DataBuilder.generateFile(custom, "CustomTest");
+       DataBuilder.generateFile(Erdos, "Erdos2");
        //DataBuilder.generateFile(Graph.EdgeValues(custom, 10, 22), "CustomTest");
-       Graph di = Graph.Dijkstra(custom, 0);
-       DataBuilder.generateFile(di, "DijkstraCustom");
+       Graph di = Graph.Dijkstra(Erdos, 5);
+       DataBuilder.generateFile(di, "DijkstraErdos2");
        
 //        Graph di = GraphFactory.Dijkstra(Erdos, 0);
 //        DataBuilder.generateFile(di, "Dijkstra");

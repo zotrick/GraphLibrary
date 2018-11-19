@@ -5,11 +5,13 @@
  */
 package Elements;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Objects;
 import java.util.PriorityQueue;
 import java.util.Random;
 
@@ -22,8 +24,8 @@ public class Graph {
     final private boolean isDirected;
     private boolean allowSelfEdge;
     private int n, m;
-    private HashMap<Integer, Node> nodes;
-    private HashMap<String, Edge> edges;
+    private HashMap<Integer, Node> nodes = new HashMap<>();
+    private HashMap<String, Edge> edges = new HashMap<>();
     private boolean[][] adjMatrix;
 
     private generateMethod generateMethod;
@@ -116,19 +118,54 @@ public class Graph {
         return edges;
     }
 
+    /**
+     * Establish a set of nodes for the graph
+     *
+     * @param nodes set of nodes to establish
+     */
     public void setNodes(HashMap<Integer, Node> nodes) {
         this.nodes = nodes;
     }
 
+    /**
+     * Establish a set of edges for the graph
+     *
+     * @param edges set of edges to establish
+     */
     public void setEdges(HashMap<String, Edge> edges) {
         this.edges = edges;
         this.m = edges.size();
+    }
+
+    /**
+     * Add a new node to the graph
+     *
+     * @param n node to add
+     */
+    public void addNode(Node n) {
+        this.nodes.put(n.ikey, n);
+    }
+
+    /**
+     * Add a new edge to the graph
+     *
+     * @param e edge to add
+     */
+    public void addEdge(Edge e) {
+        this.edges.put("N" + e.getU() + "--" + "N" + e.getV(), e);
     }
 
     public boolean[][] getAdjMatrix() {
         return adjMatrix;
     }
 
+    /**
+     *
+     * @param n Number of nodes
+     * @param m Number of edges
+     * @param allowSelfEdge
+     * @return Graph created
+     */
     public static Graph ErdosRenyi(int n, int m, boolean allowSelfEdge) {
         HashMap<Integer, Node> nodes = new HashMap<>();
         HashMap<String, Edge> edges = new HashMap<>();
@@ -445,7 +482,7 @@ public class Graph {
 
     /**
      *
-     * @param g graph to set Weigths
+     * @param g graph to set Weights
      * @param min
      * @param max
      * @return
@@ -465,62 +502,104 @@ public class Graph {
     public static Graph Dijkstra(Graph g, int s) {
 
         PriorityQueue pq = new PriorityQueue();
-        int[] papadelachona = new int[g.getN()];
-        for (Node n : g.getNodes().values()){
+        HashMap<String, Edge> edges = new HashMap<>();
+        int[] parent = new int[g.getN()];
+        
+        for (Node n : g.getNodes().values()) {
             pq.add(n);
-            papadelachona[n.ikey] = -1;
+            parent[n.getIkey()] = -1;
         }
         
         LinkedList<Node> S = new LinkedList<>();
-        int[] distances = new int[g.getN()];
-        Node nodeS = g.getNodes().get(s);
-        nodeS.setDistance(0);
-        S.add(nodeS);
-        pq.remove(nodeS);
-        HashMap<String, Edge> edges = new HashMap<>();
-
-//        for (int i = 0; i < distances.length; i++) {
-//            distances[i] = -1; 
-//        }
-//       
-//        distances[s] = 0;
+        Node nodeS = g.getNodes().get(s); nodeS.setDistance(0.00); nodeS.setDiscovered(true);
+        parent[s] = 0;
+        pq.remove(nodeS); pq.add(nodeS);
+        
+        
         while (!pq.isEmpty()) {
-            System.out.println("pq: "+ pq.size());
+            Node n = (Node) pq.element();
+            pq.remove();
+            n.setDiscovered(true);
             
-            for (int i = 0; i < S.size(); i++) {
-                Iterator<Map.Entry<String, Edge>> it = g.getEdges().entrySet().iterator();
+            if(!Objects.equals(n.getIkey(), nodeS.getIkey())){
+//                Node u = new Node(g.getNodes().get(parent[n.getIkey()]).n_key) ;
+//                Node v = new Node(n.getN_key());
+                Node u = g.getNodes().get(parent[n.getIkey()]);
+                Node v = g.getNodes().get(n.getIkey());
+                double du= (Math.round(u.getDistance() * 100d) / 100d);
+                double dv= (Math.round(v.getDistance() * 100d) / 100d);
+                u.setLabel(u.getN_key()+"("+du+")");
+                v.setLabel(v.getN_key()+"("+dv+")");
+                String key = u.getN_key() + "--" + v.getN_key();
+               Edge p = new Edge(key, u.getIkey(), v.getIkey(), v.getDistance()-u.getDistance());
+//                 Edge ne = g.getEdges().get(key);
+//                edges.put(key,ne);
+                edges.put(key, p);
+            }
+
+            Iterator<Map.Entry<String, Edge>> it = g.getEdges().entrySet().iterator();
             it = g.getEdges().entrySet().iterator();
-            //for (Node x : S) {
-                while (it.hasNext()) {
-                    Map.Entry<String, Edge> edge = it.next();
-                    Edge e = edge.getValue();
-                    if (e.getU() == S.get(i).ikey && (!S.contains(g.getNodes().get(e.getV())))) {
-                        Node v = g.getNodes().get(e.getV());
-                        double aux = S.get(i).getDistance() + e.weight;
-                        if(aux<v.getDistance()){
-                            edges.put(edge.getKey(), e);
-                            v.setDistance(aux);
-                            papadelachona[e.getV()] = e.getU();
-                            S.add(v);
+            while (it.hasNext()) {
+                Map.Entry<String, Edge> edge = it.next();
+                Edge e = edge.getValue();
+                if (e.getU() == n.ikey && !g.getNodes().get(e.getV()).isDiscovered()) {
+                    Node v = g.getNodes().get(e.getV());
+                    double aux = n.getDistance() + e.weight;
+                    if (aux < v.getDistance()) {
+                        v.setDistance(aux);
+                        parent[e.getV()] = e.getU();
+                        if (pq.contains(v)) {
                             pq.remove(v);
-                           // i=0;
                         }
-                        
-                    } else if (e.getV() == S.get(i).ikey && (!S.contains(g.getNodes().get(e.getU())))) {
-                        Node u = g.getNodes().get(e.getU());
-                        double aux = S.get(i).getDistance() + e.weight;
-                        if(aux<u.getDistance()){
-                            edges.put(edge.getKey(), e);
-                            u.setDistance(aux);
-                            papadelachona[e.getU()] = e.getV();
-                            S.add(u);
+                        pq.add(v);
+                    }
+                } else if (e.getV() == n.ikey && (!S.contains(g.getNodes().get(e.getU())))) {
+                    Node u = g.getNodes().get(e.getU());
+                    double aux = n.getDistance() + e.weight;
+                    if (aux < u.getDistance()) {
+                        u.setDistance(aux);
+                        parent[e.getU()] = e.getV();
+                        if (pq.contains(u)) {
                             pq.remove(u);
-                            //i=0;
                         }
+                        pq.add(u);
                     }
                 }
             }
         }
+
+        //     System.out.println("pq: " + pq.size());
+       
+    Graph t = new Graph(false, g.getN(), g.getNodes(), edges);
+    return t ;
+}
+
+public static Graph Kruskal_D(Graph g) {
+
+        HashMap<String, Edge> edges = new HashMap<>();
+        LinkedList<Edge> T = new LinkedList<>();
+        LinkedList<LinkedList<Node>> find = new LinkedList<>();
+        PriorityQueue pq = new PriorityQueue();
+        for (Edge e : g.getEdges().values()) {
+            pq.add(e);
+        }
+
+        Iterator<PriorityQueue> it = pq.iterator();
+        while (it.hasNext()) {
+            Edge uv = (Edge) it.next().element();
+            Node u = g.getNodes().get(uv.getU());
+            Node v = g.getNodes().get(uv.getV());
+            find.add(new LinkedList<>());
+            find.getLast().add(u);
+            find.getLast().add(v);
+            for (LinkedList ds : find) {
+                if (ds.contains(g.getNodes().get(uv.getU()))) {
+                    T.add(uv);
+                }
+            }
+
+        }
+
         Graph t = new Graph(false, g.getN(), g.getNodes(), edges);
         return t;
     }

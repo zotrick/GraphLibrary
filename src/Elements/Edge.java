@@ -52,7 +52,7 @@ public class Edge implements Comparable<Edge>{
      * @param v number of node 2
      * @param w weight
      */
-    public Edge(String e_name,int u,int v,int w) {
+    public Edge(String e_name,int u,int v,double w) {
         this.e_name = e_name;
         this.u = u;
         this.v = v;

@@ -32,7 +32,8 @@ public class DataBuilder {
         String struct = "graph G1 {\n";
         Iterator<Map.Entry<Integer, Node>> it2 = g.getNodes().entrySet().iterator();
         while (it2.hasNext()) {
-            struct += it2.next().getValue().getN_key() + ";\n";
+            Map.Entry<Integer, Node> nd = it2.next();
+            struct += nd.getValue().getN_key() + " [label=\""+nd.getValue().getLabel()+"\"]"+";\n";
         }
         struct += "\n";
         Iterator<Map.Entry<String, Edge>> it = g.getEdges().entrySet().iterator();

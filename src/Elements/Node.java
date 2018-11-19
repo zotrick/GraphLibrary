@@ -14,10 +14,12 @@ import java.util.Comparator;
 public class Node implements Comparable<Node> {
 
     public String n_key;
+    public String label="";
     public String color;
     public int degree;
     public double x, y;
     public int ikey;
+    public boolean discovered = false;
     public double distance = Double.POSITIVE_INFINITY;
 
     /**
@@ -30,6 +32,7 @@ public class Node implements Comparable<Node> {
         this.n_key = n_key;
         this.ikey = Integer.parseInt(n_key.substring(1, n_key.length()));
         this.color = color;
+        this.label = n_key;
     }
 
     /**
@@ -40,6 +43,7 @@ public class Node implements Comparable<Node> {
         this.degree = 0;
         this.n_key = n_key;
         this.ikey = Integer.parseInt(n_key.substring(1, n_key.length()));
+        this.label = n_key;
     }
 
     /**
@@ -63,7 +67,18 @@ public class Node implements Comparable<Node> {
     public void setN_key(String n_key) {
         this.n_key = n_key;
         this.ikey = Integer.parseInt(n_key.substring(1, n_key.length()));
+        this.label = n_key;
     }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+    
+    
 
     public int getDegree() {
         return degree;
@@ -84,6 +99,16 @@ public class Node implements Comparable<Node> {
     public void setDistance(double distance) {
         this.distance = distance;
     }
+
+    public boolean isDiscovered() {
+        return discovered;
+    }
+
+    public void setDiscovered(boolean discovered) {
+        this.discovered = discovered;
+    }
+    
+    
 
     @Override
     public int compareTo(Node n2) {
