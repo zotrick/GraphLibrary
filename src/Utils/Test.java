@@ -161,13 +161,63 @@ public class Test {
         Graph tDr4_ = GraphFactory.DFSRecursive(g8, 0, new boolean[g8.getN()]);
         DataBuilder.generateFile(tDr4_, "DFSr_Barabasi_500");
     }
+    
+    private static void generateDijkstraTest(){
+    //10
+        Graph g1 = Graph.ErdosRenyi(10, 35, false);
+        Graph.EdgeValues(g1, 1, 15);
+        DataBuilder.generateFile(g1, "Erdos_10");
+        Graph d1 = Graph.Dijkstra(g1, 0);
+        DataBuilder.generateFile(d1, "Dijk_Erdos_10");
+        Graph g2 = Graph.Gilbert(10, 60, false);
+        Graph.EdgeValues(g2, 1, 15);
+        DataBuilder.generateFile(g2, "Gilbert_10");
+        Graph d2 = Graph.Dijkstra(g2, 0);
+        DataBuilder.generateFile(d2, "Dijk_Gilbert_10");
+        Graph g3 = Graph.SimpleGeographic(10, 50, false);
+        Graph.EdgeValues(g3, 1, 15);
+        DataBuilder.generateFile(g3, "SimpleGeo_10");
+        Graph d3 = Graph.Dijkstra(g3, 0);
+        DataBuilder.generateFile(d3, "Dijk_SimpleGeo_10");
+        Graph g4 = Graph.BarabasiAlbert(10, 3, false);
+        Graph.EdgeValues(g4, 1, 15);
+        DataBuilder.generateFile(g4, "Barabasi_10");
+        Graph d4 = Graph.Dijkstra(g4, 0);
+        DataBuilder.generateFile(d4, "Dijk_Barabasi_10");
+        
+        //200
+        Graph g5 = Graph.ErdosRenyi(200, 1200, false);
+        Graph.EdgeValues(g5, 1, 200);
+        DataBuilder.generateFile(g5, "Erdos_200");
+        Graph d5 = Graph.Dijkstra(g5, 2);
+        DataBuilder.generateFile(d5, "Dijk_Erdos_200");
+        Graph g6 = Graph.Gilbert(200, 15, false);
+        Graph.EdgeValues(g6, 1, 200);
+        DataBuilder.generateFile(g6, "Gilbert_200");
+        Graph d6 = Graph.Dijkstra(g6, 1);
+        DataBuilder.generateFile(d6, "Dijk_Gilbert_200");
+        Graph g7 = Graph.SimpleGeographic(200, 35, false);
+        Graph.EdgeValues(g7, 1, 200);
+        DataBuilder.generateFile(g7, "SimpleGeo_200");
+        Graph d7 = Graph.Dijkstra(g7, 3);
+        DataBuilder.generateFile(d7, "Dijk_SimpleGeo_200");
+        Graph g8 = Graph.BarabasiAlbert(200, 20, false);
+        Graph.EdgeValues(g8, 1, 200);
+        DataBuilder.generateFile(g8, "Barabasi_200");
+        Graph d8 = Graph.Dijkstra(g8, 5);
+        DataBuilder.generateFile(d8, "Dijk_Barabasi_200");
+    }
 
     public static void main(String args[]) {
 
 //      generateGraphsTest();
 //      generateBFSTest();
 //      Graph g = generateCustomGraph();
-//        generateBFS_DFS_Test();
+//      generateBFS_DFS_Test();
+        generateDijkstraTest();
+        
+        
+// Older tests
 //        automaticTest();
 
 //        Graph gOP = GraphFactory.BarabasiAlbert(5000, 10, false);
@@ -178,14 +228,14 @@ public class Test {
 //        Graph gOP = GraphFactory.SimpleGeographic(2000, 10, false);
 //        DataBuilder.generateFile(gOP, "GeoOP");
         
-       Graph Erdos = Graph.EdgeValues(Graph.ErdosRenyi(20, 30, false),1,12);
+//       Graph Erdos = Graph.EdgeValues(Graph.ErdosRenyi(20, 30, false),1,12);
 //       Graph custom = generateCustomGraph();
         //DataBuilder.generateFile(Erdos, "ErdosTest");
         
-       DataBuilder.generateFile(Erdos, "Erdos2");
+//       DataBuilder.generateFile(Erdos, "Erdos2");
        //DataBuilder.generateFile(Graph.EdgeValues(custom, 10, 22), "CustomTest");
-       Graph di = Graph.Dijkstra(Erdos, 5);
-       DataBuilder.generateFile(di, "DijkstraErdos2");
+//       Graph di = Graph.Dijkstra(Erdos, 5);
+//       DataBuilder.generateFile(di, "DijkstraErdos2");
        
 //        Graph di = GraphFactory.Dijkstra(Erdos, 0);
 //        DataBuilder.generateFile(di, "Dijkstra");

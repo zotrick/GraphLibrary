@@ -58,6 +58,7 @@ public class Node implements Comparable<Node> {
         this.x = x;
         this.y = y;
         this.degree = 0;
+        this.label = n_key;
     }
 
     public String getN_key() {
