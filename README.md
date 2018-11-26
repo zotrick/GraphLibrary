@@ -1,6 +1,7 @@
 # GraphLibrary
->Proyect for Algorithms Analysis and Design
->This java project contains an implementation of a graph library.
+>Proyect for Algorithms Analysis and Design.
+
+This java project contains an implementation of a graph library.
 #  First Delivery 
 > Generate aleatory graphs with the next models:
 > * **Model G(n,m) Erdős–Rényi**.
