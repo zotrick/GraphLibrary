@@ -66,7 +66,8 @@ public class GraphFactory {
                 adjMatrix[n2][n1] = true;
             }
         }
-        Graph g = new Graph(false, n, nodes, edges, adjMatrix);
+//        Graph g = new Graph(false, n, nodes, edges, adjMatrix);
+Graph g = new Graph(false, n, nodes, edges);
         return g;
     }
 
@@ -118,7 +119,8 @@ public class GraphFactory {
                 }
             }
         }
-        Graph g = new Graph(false, n, nodes, edges, adjMatrix);
+        //Graph g = new Graph(false, n, nodes, edges, adjMatrix);
+        Graph g = new Graph(false, n, nodes, edges);
         return g;
     }
 
@@ -181,8 +183,9 @@ public class GraphFactory {
                 }
             }
         }
-        Graph g = new Graph(false, n, nodes, edges, adjMatrix);
-        return g;
+//        Graph g = new Graph(false, n, nodes, edges, adjMatrix);
+Graph g = new Graph(false, n, nodes, edges);        
+return g;
     }
 
     /**
@@ -224,7 +227,8 @@ public class GraphFactory {
                 }
             }
         }
-        Graph g = new Graph(false, n, nodes, edges, adjMatrix);
+//        Graph g = new Graph(false, n, nodes, edges, adjMatrix);
+Graph g = new Graph(false, n, nodes, edges);
         return g;
     }
 

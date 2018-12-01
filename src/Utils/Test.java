@@ -40,7 +40,7 @@ public class Test {
         edges.put("N1--N3", new Edge("E3", 1, 3,7.00));
         edges.put("N1--N5", new Edge("E4", 1, 5,2.00));
         edges.put("N2--N6", new Edge("E5", 2, 6,7.00));
-        edges.put("N6--N4", new Edge("E6", 6, 4,2.00));
+        //edges.put("N6--N4", new Edge("E6", 6, 4,2.00));
         edges.put("N4--N6", new Edge("E7", 4, 6,1.00));
         
         Graph g = new Graph(false, nodes.size(), nodes, edges);
@@ -207,41 +207,148 @@ public class Test {
         Graph d8 = Graph.Dijkstra(g8, 5);
         DataBuilder.generateFile(d8, "Dijk_Barabasi_200");
     }
-
+    
+    private static void generateDijkstraTest2(){
+    //10
+        Graph g1 = Graph.ErdosRenyi(10, 35, false);
+        Graph.EdgeValues(g1, 1, 15);
+        DataBuilder.generateFile(g1, "Erdos_10");
+        Graph d1 = Graph.Dijkstra2(g1, 0);
+        DataBuilder.generateFile(d1, "Dijk_Erdos_10");
+        Graph g2 = Graph.Gilbert(10, 60, false);
+        Graph.EdgeValues(g2, 1, 15);
+        DataBuilder.generateFile(g2, "Gilbert_10");
+        Graph d2 = Graph.Dijkstra2(g2, 0);
+        DataBuilder.generateFile(d2, "Dijk_Gilbert_10");
+        Graph g3 = Graph.SimpleGeographic(10, 50, false);
+        Graph.EdgeValues(g3, 1, 15);
+        DataBuilder.generateFile(g3, "SimpleGeo_10");
+        Graph d3 = Graph.Dijkstra2(g3, 0);
+        DataBuilder.generateFile(d3, "Dijk_SimpleGeo_10");
+        Graph g4 = Graph.BarabasiAlbert(10, 3, false);
+        Graph.EdgeValues(g4, 1, 15);
+        DataBuilder.generateFile(g4, "Barabasi_10");
+        Graph d4 = Graph.Dijkstra2(g4, 0);
+        DataBuilder.generateFile(d4, "Dijk_Barabasi_10");
+        
+        //200
+        Graph g5 = Graph.ErdosRenyi(200, 1200, false);
+        Graph.EdgeValues(g5, 1, 200);
+        DataBuilder.generateFile(g5, "Erdos_200");
+        Graph d5 = Graph.Dijkstra2(g5, 2);
+        DataBuilder.generateFile(d5, "Dijk_Erdos_200");
+        Graph g6 = Graph.Gilbert(200, 15, false);
+        Graph.EdgeValues(g6, 1, 200);
+        DataBuilder.generateFile(g6, "Gilbert_200");
+        Graph d6 = Graph.Dijkstra2(g6, 1);
+        DataBuilder.generateFile(d6, "Dijk_Gilbert_200");
+        Graph g7 = Graph.SimpleGeographic(200, 35, false);
+        Graph.EdgeValues(g7, 1, 200);
+        DataBuilder.generateFile(g7, "SimpleGeo_200");
+        Graph d7 = Graph.Dijkstra2(g7, 3);
+        DataBuilder.generateFile(d7, "Dijk_SimpleGeo_200");
+        Graph g8 = Graph.BarabasiAlbert(200, 20, false);
+        Graph.EdgeValues(g8, 1, 200);
+        DataBuilder.generateFile(g8, "Barabasi_200");
+        Graph d8 = Graph.Dijkstra2(g8, 5);
+        DataBuilder.generateFile(d8, "Dijk_Barabasi_200");
+    }
+    
+    private static void generateMSTTest(){
+//        10 nodes Erdos
+        Graph g1 = Graph.ErdosRenyi(10, 35, false);
+        Graph.EdgeValues(g1, 1, 15);
+        DataBuilder.generateFile(g1, "Erdos_10");
+        Graph k1 = Graph.Kruskal_D(g1);
+        DataBuilder.generateFile(k1, "KrusD_Erdos_10");
+        Graph p1 = Graph.Prim(g1);
+        DataBuilder.generateFile(p1, "Prim_Erdos_10");
+        Graph ki1 = Graph.Kruskal_I(g1);
+        DataBuilder.generateFile(ki1, "KrusI_Erdos_10");
+//        200 nodes Erdos
+        Graph g2 = Graph.ErdosRenyi(200, 1200, false);
+        Graph.EdgeValues(g2, 1, 15);
+        DataBuilder.generateFile(g2, "Erdos_200");
+        Graph k2 = Graph.Kruskal_D(g2);
+        DataBuilder.generateFile(k2, "KrusD_Erdos_200");
+        Graph p2 = Graph.Prim(g2);
+        DataBuilder.generateFile(p2, "Prim_Erdos_200");
+        Graph ki2 = Graph.Kruskal_I(g2);
+        DataBuilder.generateFile(ki2, "KrusI_Erdos_200");
+//        10 nodes Gilbert
+        Graph g3 = Graph.Gilbert(10, 60, false);
+        Graph.EdgeValues(g3, 1, 15);
+        DataBuilder.generateFile(g3, "Gilbert_10");
+        Graph k3 = Graph.Kruskal_D(g3);
+        DataBuilder.generateFile(k3, "KrusD_Gilbert_10");
+        Graph p3 = Graph.Prim(g3);
+        DataBuilder.generateFile(p3, "Prim_Gilbert_10");
+        Graph ki3 = Graph.Kruskal_I(g3);
+        DataBuilder.generateFile(ki3, "KrusI_Gilbert_10");
+//        200 nodes Gilbert
+        Graph g4 = Graph.Gilbert(200, 15, false);
+        Graph.EdgeValues(g4, 1, 15);
+        DataBuilder.generateFile(g4, "Gilbert_200");
+        Graph k4 = Graph.Kruskal_D(g4);
+        DataBuilder.generateFile(k4, "KrusD_Gilbert_200");
+        Graph p4 = Graph.Prim(g4);
+        DataBuilder.generateFile(p4, "Prim_Gilbert_200");
+        Graph ki4 = Graph.Kruskal_I(g4);
+        DataBuilder.generateFile(ki4, "KrusI_Gilbert_200");
+//        10 nodes SimpleGeo
+        Graph g5 = Graph.SimpleGeographic(10, 50, false);
+        Graph.EdgeValues(g5, 1, 15);
+        DataBuilder.generateFile(g5, "SimpleGeo_10");
+        Graph k5 = Graph.Kruskal_D(g5);
+        DataBuilder.generateFile(k5, "KrusD_SimpleGeo_10");
+        Graph p5 = Graph.Prim(g5);
+        DataBuilder.generateFile(p5, "Prim_SimpleGeo_10");
+        Graph ki5 = Graph.Kruskal_I(g5);
+        DataBuilder.generateFile(ki5, "KrusI_SimpleGeo_10");
+//        200 nodes SimpleGeo
+        Graph g6 = Graph.SimpleGeographic(200, 35, false);
+        Graph.EdgeValues(g6, 1, 15);
+        DataBuilder.generateFile(g6, "SimpleGeo_200");
+        Graph k6 = Graph.Kruskal_D(g6);
+        DataBuilder.generateFile(k6, "KrusD_SimpleGeo_200");
+        Graph p6 = Graph.Prim(g6);
+        DataBuilder.generateFile(p6, "Prim_SimpleGeo_200");
+        Graph ki6 = Graph.Kruskal_I(g6);
+        DataBuilder.generateFile(ki6, "KrusI_SimpleGeo_200");
+//        30 nodes Barabasi
+        Graph g7 = Graph.BarabasiAlbert(30, 5, false);
+        Graph.EdgeValues(g7, 1, 15);
+        DataBuilder.generateFile(g7, "Barabasi_30");
+        Graph k7 = Graph.Kruskal_D(g7);
+        DataBuilder.generateFile(k7, "KrusD_Barabasi_30");
+        Graph p7 = Graph.Prim(g7);
+        DataBuilder.generateFile(p7, "Prim_Barabasi_30");
+        Graph ki7 = Graph.Kruskal_I(g7);
+        DataBuilder.generateFile(ki7, "KrusI_Barabasi_30");
+//        200 Barabasi
+        Graph g8 = Graph.BarabasiAlbert(200, 20, false);
+        Graph.EdgeValues(g8, 1, 15);
+        DataBuilder.generateFile(g8, "Barabasi_200");
+        Graph k8 = Graph.Kruskal_D(g8);
+        DataBuilder.generateFile(k8, "KrusD_Barabasi_200");
+        Graph p8 = Graph.Prim(g8);
+        DataBuilder.generateFile(p8, "Prim_Barabasi_200");
+        Graph ki8 = Graph.Kruskal_I(g8);
+        DataBuilder.generateFile(ki8, "KrusI_Barabasi_200");
+        
+    }
+    
     public static void main(String args[]) {
 
+        //Proyect 1 Graph Generator - Test
 //      generateGraphsTest();
-//      generateBFSTest();
-//      Graph g = generateCustomGraph();
-//      generateBFS_DFS_Test();
-        generateDijkstraTest();
+        //Proyect 2 BFS_DFS - Test
+//     generateBFS_DFS_Test();
+        //Proyect 3 Shortest Path_Dijkstra - Test
+//      generateDijkstraTest();
+        //Proyect 4 Minimum Expansion Tree_KruskalD_KruskalInv_Prim - Test
+        generateMSTTest();
         
-        
-// Older tests
-//        automaticTest();
-
-//        Graph gOP = GraphFactory.BarabasiAlbert(5000, 10, false);
-//        DataBuilder.generateFile(gOP, "OP");
-//        Graph gOP = GraphFactory.ErdosRenyi(15000, 8000, false);
-//        DataBuilder.generateFile(gOP, "ErdosOP");
-
-//        Graph gOP = GraphFactory.SimpleGeographic(2000, 10, false);
-//        DataBuilder.generateFile(gOP, "GeoOP");
-        
-//       Graph Erdos = Graph.EdgeValues(Graph.ErdosRenyi(20, 30, false),1,12);
-//       Graph custom = generateCustomGraph();
-        //DataBuilder.generateFile(Erdos, "ErdosTest");
-        
-//       DataBuilder.generateFile(Erdos, "Erdos2");
-       //DataBuilder.generateFile(Graph.EdgeValues(custom, 10, 22), "CustomTest");
-//       Graph di = Graph.Dijkstra(Erdos, 5);
-//       DataBuilder.generateFile(di, "DijkstraErdos2");
-       
-//        Graph di = GraphFactory.Dijkstra(Erdos, 0);
-//        DataBuilder.generateFile(di, "Dijkstra");
-        //    Graph g = generateCustomGraph();
-         //   DataBuilder.generateFile(g, "customTest");
-         //   Graph dj = GraphFactory.Dijkstra(g, 0);
     }
     private static ArrayList<Object[]> testParameters;
     public static void automaticTest(){
